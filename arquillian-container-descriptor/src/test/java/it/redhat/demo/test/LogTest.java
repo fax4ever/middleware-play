@@ -1,6 +1,5 @@
 package it.redhat.demo.test;
 
-import it.redhat.demo.jms.JmsProducer;
 import it.redhat.demo.producer.LogProducer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -21,22 +20,21 @@ import static org.junit.Assert.assertNotNull;
  */
 
 @RunWith(Arquillian.class)
-public class GoTest {
+public class LogTest {
 
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
             .addClass(LogProducer.class)
-            .addClass(JmsProducer.class)
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
     @Inject
-    public Logger log;
+    private Logger log;
 
     @Test
     @InSequence(1)
-    public void gogogo() {
+    public void test_logIsProduced() {
 
         assertNotNull(log);
         log.info("I'm not null! - I'm a real logger instance");
