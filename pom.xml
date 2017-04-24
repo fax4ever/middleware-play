@@ -18,7 +18,7 @@
     </licenses>
 
     <modules>
-        <module>arquillian-container-descriptor</module>
+        <module>arquillian-jms</module>
         <module>eap7-amq6-play</module>
     </modules>
 
