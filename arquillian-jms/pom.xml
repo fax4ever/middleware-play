@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.redhat.demo</groupId>
-    <artifactId>arquillian-container-descriptor</artifactId>
+    <artifactId>arquillian-jms</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
