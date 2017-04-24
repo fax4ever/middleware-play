@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.redhat.demo</groupId>
-    <artifactId>arquillian-container-descriptor</artifactId>
+    <artifactId>arquillian-jpa</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -50,12 +50,6 @@
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.spec.javax.jms</groupId>
-            <artifactId>jboss-jms-api_2.0_spec</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -121,5 +115,6 @@
             </plugins>
         </pluginManagement>
     </build>
+
 
 </project>
