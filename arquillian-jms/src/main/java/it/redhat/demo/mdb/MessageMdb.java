@@ -1,5 +1,6 @@
 package it.redhat.demo.mdb;
 
+import it.redhat.demo.exception.WrongMessageType;
 import org.slf4j.Logger;
 
 import javax.annotation.Resource;
@@ -34,14 +35,14 @@ public class MessageMdb implements MessageListener {
         String text;
 
         try {
-            if (message instanceof TextMessage) {
-                TextMessage msg = (TextMessage) message;
-                text = msg.getText();
-
-                log.trace("Received Message from queue: {}", msg.getText());
-            } else {
-                throw new RuntimeException("Message of wrong type " + message.getClass().getName());
+            if (!(message instanceof TextMessage)) {
+                throw new WrongMessageType(message);
             }
+
+            TextMessage msg = (TextMessage) message;
+            text = msg.getText();
+
+            log.trace("Received Message from queue: {}", msg.getText());
         } catch (JMSException e) {
             throw new RuntimeException(e);
         }

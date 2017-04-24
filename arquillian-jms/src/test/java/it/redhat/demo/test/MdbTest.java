@@ -1,10 +1,10 @@
 package it.redhat.demo.test;
 
+import it.redhat.demo.exception.WrongMessageType;
 import it.redhat.demo.mdb.MessageMdb;
 import it.redhat.demo.producer.LogProducer;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -16,9 +16,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.jms.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by fabio.ercoli@redhat.com on 21/04/17.
@@ -27,12 +25,15 @@ import static org.junit.Assert.fail;
 @RunWith(Arquillian.class)
 public class MdbTest {
 
+    public static final int TIMEOUT = 10000;
+
     @Deployment
     public static WebArchive create() {
 
         return ShrinkWrap.create(WebArchive.class)
            .addClass(LogProducer.class)
            .addClass(MessageMdb.class)
+           .addClass(WrongMessageType.class)
            .addAsWebInfResource("test-jms.xml")
            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
@@ -50,17 +51,19 @@ public class MdbTest {
     @Resource(mappedName = "java:/jms/queue/RES")
     private Queue responseQueue;
 
+    @Resource(mappedName = "java:/jms/queue/DLQ")
+    private Queue dlq;
+
     @Test
-    @InSequence(1)
-    public void test_sendMessage() throws Exception {
+    public void test_good() throws Exception {
 
         jms.createProducer().send(requestQueue, "Fabio");
 
-        Message receive = jms.createConsumer(responseQueue).receive(10000);
+        Message receive = jms.createConsumer(responseQueue).receive(TIMEOUT);
         assertNotNull(receive);
 
         if (!(receive instanceof TextMessage)) {
-            fail();
+            fail("wrong message type");
         }
 
         TextMessage textMessage = (TextMessage)receive;
@@ -70,5 +73,28 @@ public class MdbTest {
         assertEquals("Ciao Fabio", text);
 
     }
+
+    @Test
+    public void test_wrong_message_type() throws Exception {
+
+        jms.createProducer().send(requestQueue, 739);
+
+        Message receive = jms.createConsumer(dlq).receive(TIMEOUT);
+        assertNotNull(receive);
+
+        log.info("message type {}", receive.getClass());
+
+        if (!(receive instanceof ObjectMessage)) {
+            fail("wrong message type");
+        }
+
+        ObjectMessage textMessage = (ObjectMessage)receive;
+        Object value = textMessage.getObject();
+        log.info("dlq content message {}", value);
+
+        assertEquals(739, value);
+
+    }
+
 
 }
