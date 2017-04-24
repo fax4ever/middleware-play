@@ -20,6 +20,7 @@
     <modules>
         <module>arquillian-jms</module>
         <module>arquillian-jpa</module>
+        <module>arquillian-jaxrs</module>
         <module>eap7-amq6-play</module>
     </modules>
 

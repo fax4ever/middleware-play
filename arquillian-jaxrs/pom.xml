@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.redhat.demo</groupId>
-    <artifactId>arquillian-jpa</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>arquillian-jaxrs</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
@@ -18,8 +18,6 @@
         <version.org.jboss.bom.eap>7.0.5.GA</version.org.jboss.bom.eap>
 
         <version.slf4j>1.7.7.redhat-2</version.slf4j>
-
-        <version.arquillian.persistence>1.0.0.Alpha6</version.arquillian.persistence>
     </properties>
 
     <dependencyManagement>
@@ -52,12 +50,6 @@
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -101,13 +93,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-persistence-impl</artifactId>
-            <version>${version.arquillian.persistence}</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -130,5 +115,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
+    
 </project>
