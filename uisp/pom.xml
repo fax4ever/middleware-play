@@ -7,6 +7,8 @@
 	<packaging>pom</packaging>
 	<name>uisproma</name>
 
+	<description>This is an old 2011/12 JEE6 project</description>
+
 	<modules>
 		<module>uisproma-ear</module>
 		<module>uisproma-ejb</module>

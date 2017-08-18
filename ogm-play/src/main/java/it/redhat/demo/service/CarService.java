@@ -42,6 +42,7 @@ public class CarService {
         try {
 
             ut.begin();
+            em.joinTransaction();
 
             Car car = new Car();
             car.setFrameNumber(frame);
