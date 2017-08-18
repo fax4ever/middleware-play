@@ -24,6 +24,7 @@
     <module>eap7-amq6-play</module>
     <module>ogm-play</module>
     <module>uisp</module>
+    <module>uisp-2017</module>
   </modules>
 
 </project>

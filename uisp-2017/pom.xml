@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>it.redhat.demo</groupId>
-  <artifactId>ogm-play</artifactId>
+  <artifactId>uisp-2017</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
@@ -34,16 +34,23 @@
     <!-- Deploy on wildfly 10.1.0 -->
     <wildfly-javaee7.version>10.1.0.Final</wildfly-javaee7.version>
 
-    <!-- Hibernate OGM versions -->
+    <!-- with Hibernate OGM versions -->
     <hibernate.ogm.version>5.2.0-SNAPSHOT</hibernate.ogm.version>
-    <!-- from OGM BOM other hibernate / infinispan versions -->
-    <hibernate.orm.version>5.1.9.Final</hibernate.orm.version>
-    <hibernate.search.version>5.6.2.Final-orm51</hibernate.search.version>
-    <infinispan.version>8.2.6.Final</infinispan.version>
-
-    <version.org.jboss.spec.jboss.javaee.7>1.0.3.Final</version.org.jboss.spec.jboss.javaee.7>
-
   </properties>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencyManagement>
     <dependencies>
@@ -65,66 +72,8 @@
         <scope>import</scope>
         <version>${wildfly-javaee7.version}</version>
       </dependency>
-
-      <dependency>
-        <groupId>org.jboss.spec</groupId>
-        <artifactId>jboss-javaee-7.0</artifactId>
-        <version>${version.org.jboss.spec.jboss.javaee.7}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <build>
-    <finalName>${project.artifactId}</finalName>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-      <plugin>
-        <!-- used to create wildfly static layer modules only -->
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <!-- WildFly server; Unpacked into target/wildfly-10.0.0.Final -->
-                <artifactItem>
-                  <groupId>org.wildfly</groupId>
-                  <artifactId>wildfly-dist</artifactId>
-                  <version>${wildfly-javaee7.version}</version>
-                  <type>zip</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}</outputDirectory>
-                </artifactItem>
-                <!-- Hibernate ORM modules; Unpacked into target/wildfly-10.0.0.Final/modules -->
-                <artifactItem>
-                  <groupId>org.hibernate</groupId>
-                  <artifactId>hibernate-orm-modules</artifactId>
-                  <version>${hibernate.orm.version}</version>
-                  <classifier>wildfly-10-dist</classifier>
-                  <type>zip</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/wildfly-10.1.0.Final/modules</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <dependencies>
     <dependency>
@@ -137,6 +86,11 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-search-orm</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
     </dependency>
 
     <dependency>
@@ -163,7 +117,11 @@
       <scope>provided</scope>
     </dependency>
 
-
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- Log -->
     <dependency>
