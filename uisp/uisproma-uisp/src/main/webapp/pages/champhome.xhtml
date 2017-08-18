@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Campionati
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="champ" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:dataTable value="#{championshipHome.values}" var="value" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7">
+			<f:facet name="header">Campionati</f:facet>
+			
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+				#{value.champ.id}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				#{value.champ.name}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Inizio</f:facet>
+				<h:outputText value="#{value.champ.start.time}">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Fine</f:facet>
+				<h:outputText value="#{value.champ.end.time}">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Rate</f:facet>
+				#{value.champ.spepsNumber}
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Iscrizioni</f:facet>
+				#{value.iscriptionNumeber}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Disciplina</f:facet>
+				#{value.champ.sport}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Curatore</f:facet>
+				#{value.champ.curator}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText id="price" value="#{value.champ.price}" size="20" required="true">
+					<f:convertNumber minFractionDigits="2" />
+				</h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Descrizione</f:facet>
+				#{value.champ.description}
+			</h:column>
+
+			<h:column>
+				<h:link value="Modifica" outcome="champ" styleClass="button">
+					<f:param name="id" value="#{value.champ.id}" />
+				</h:link>
+			</h:column>
+			
+			<h:column>
+				<h:link value="Partecipazioni" outcome="champdetail" styleClass="button">
+					<f:param name="id" value="#{value.champ.id}" />
+				</h:link>
+			</h:column>
+
+		</h:dataTable>
+	</ui:define>
+
+</ui:composition>

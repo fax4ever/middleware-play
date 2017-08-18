@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{club.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Elenco Società" outcome="clubhome" />
+		<h:link value="Addetti" outcome="clubdetail" rendered="#{club.entity.id != null}">
+			<f:param name="id" value="#{club.entity.id}" />
+		</h:link>
+		<h:link value="Atleti" outcome="clubpeople" rendered="#{club.entity.id != null}">
+			<f:param name="id" value="#{club.entity.id}" />
+		</h:link>
+		<h:commandButton value="#{club.actionName}" action="#{club.save}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{club.delete}" style="display:none" immediate="true"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{club.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{club.load}" />
+		</f:metadata>
+
+		<div class="insidebox">
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Indentità</f:facet>
+
+				<h:outputLabel value="Codice" for="code" />
+				<h:outputText id="code" value="#{club.code}" />
+				<h:message for="code" styleClass="messages" />
+				
+				<h:outputLabel value="Codice UISP" for="formal" rendered="#{club.mode == 'CREATE'}" />
+				<h:inputText id="formal" value="#{club.entity.freshman}" rendered="#{club.mode == 'CREATE'}" validator="#{club.alredyInUse}" />
+				<h:message for="formal" styleClass="messages" rendered="#{club.mode == 'CREATE'}" />
+
+				<h:outputLabel value="Codice UISP" for="uispcode" rendered="#{club.mode == 'UPDATE'}" />
+				<h:outputText id="uispcode" value="#{club.entity.freshman}" rendered="#{club.mode == 'UPDATE'}" />
+				<h:message for="uispcode" styleClass="messages" rendered="#{club.mode == 'UPDATE'}" />
+
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText id="name" value="#{club.entity.name}" />
+				<h:message for="name" styleClass="messages" />
+
+				<h:outputLabel value="Codice Fiscale" for="taxCode" />
+				<h:inputText id="taxCode" value="#{club.entity.taxCode}" />
+				<h:message for="taxCode" styleClass="messages" />
+
+				<h:outputLabel value="Partita IVA" for="vatNumber" />
+				<h:inputText id="vatNumber" value="#{club.entity.vatNumber}" />
+				<h:message for="vatNumber" styleClass="messages" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Indirizzo</f:facet>
+
+				<h:outputLabel value="Via" for="street" />
+				<h:inputText id="street" value="#{club.entity.address.street}" />
+				<h:message for="street" />
+
+				<h:outputLabel value="Città" for="city" />
+				<h:inputText id="city" value="#{club.entity.address.city}" />
+				<h:message for="city" />
+
+				<h:outputLabel value="Stato" for="state" />
+				<h:inputText id="state" value="#{club.entity.address.state}" />
+				<h:message for="state" />
+
+				<h:outputLabel value="CAP" for="zip" />
+				<h:inputText id="zip" value="#{club.entity.address.zip}" />
+				<h:message for="zip" />
+			</h:panelGrid>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

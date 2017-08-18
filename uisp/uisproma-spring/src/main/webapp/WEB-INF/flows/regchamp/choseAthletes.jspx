@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
+	<spring:message code="registration.noAtletes4step" var="statusMessageKey" />
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<form:form action="${flowExecutionUrl}" modelAttribute="registration">
+			
+				<div class="row">
+					<div class="col-lg-3">
+						<p class="lead"><strong>${registration.name}</strong></p>
+					</div>
+					<div class="col-lg-3">
+						<p class="lead">Pagamento Rata ${registration.stepNum}</p>
+					</div>
+					<div class="col-lg-6">
+						<div class="btn-group">
+							<button type="submit" name="_eventId_cancel" class="btn btn-success">
+								Annulla
+							</button>
+							<c:if test="${not empty registration.views}">
+								<button type="submit" name="_eventId_next" class="btn btn-warning">
+									Registra Partepazioni
+								</button>
+    						</c:if>
+						</div>
+					</div>
+				</div>
+				
+				<c:if test="${empty registration.views}">
+    				<span class="alert alert-warning">${statusMessageKey}</span>
+ 				</c:if>
+				
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Codice Uisp</th>
+							<th>Data di Nascita</th>
+							<th>Cognome</th>
+							<th>Nome</th>
+							<th>Prezzo</th>
+							<th>Paga Rata</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${registration.views}" var="view" varStatus="status">
+							<tr>
+								<td>${view.athlete.uispCode}</td>
+								<td><fmt:formatDate pattern="dd/MM/yyyy" value="${view.athlete.birthDate.time}" /></td>
+								<td>${view.athlete.surname}</td>
+								<td>${view.athlete.name}</td>
+								<td>${registration.price}</td>
+								<td><form:checkbox path="views[${status.index}].selected" /></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</form:form>
+		</div>
+	</div>
+
+</div>

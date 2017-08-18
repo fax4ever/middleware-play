@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+	
+	<ui:define name="title">
+		Conferma Registrazione
+	</ui:define>
+	
+	<ui:define name="content">
+		<div class="insidebox">
+			<h:panelGrid columns="2" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Acceso</f:facet>
+				
+				<h:outputLabel value="Username" for="user" />
+				<h:outputText id="user" value="#{attachePresenter.view.attache.user.username}" />
+				
+				<h:outputLabel value="Società Sportiva" for="club" />
+				<h:outputText id="club" value="#{attachePresenter.view.attache.club.name}" />
+			</h:panelGrid>
+			  
+			<h:panelGrid columns="2" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Dati Personali</f:facet>
+				
+				<h:outputLabel value="Nome" for="name" />
+				<h:outputText id="name" value="#{attachePresenter.view.attache.fullName}" />
+				
+				<h:outputLabel value="Data di Nascita" for="born" />
+				<h:outputText id="born" converter="calendar" value="#{attachePresenter.view.attache.birthDate}" />
+				
+				<h:outputLabel value="Luogo di Nascita" for="hometown" />
+				<h:outputText id="hometown" value="#{attachePresenter.view.attache.hometown}" />
+				
+				<h:outputLabel value="Email" for="email" />
+				<h:outputText id="email" value="#{attachePresenter.view.attache.email}" />
+				
+				<h:outputLabel value="Indirizzo" for="address" />
+				<h:outputText id="address" value="#{attachePresenter.view.attache.address}" />
+			
+			</h:panelGrid>
+			
+			<div class="ui-widget ui-state-default ui-corner-all menu">
+				<a href="#" onclick="window.print();return false;" class="button">Stampa</a>
+				<h:link value="Login" outcome="/login" styleClass="button" />
+			</div>
+		</div>
+	</ui:define>
+	
+</ui:composition>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<input name="id" required="true" />
+	<on-start>
+		<evaluate expression="competitionService.read(id)" result="flowScope.competition"></evaluate>
+		<evaluate expression="competitionController.loadRegistration(competition)" result="flowScope.registration"></evaluate>
+	</on-start>
+
+	<view-state id="selectAthletes" view="selectAthletes" model="registration">
+		<transition on="next" to="selectSolutions">
+			<evaluate expression="flowScope.registration.initSelectedViews()"></evaluate>
+		</transition>
+		<transition on="cancel" to="end" />
+	</view-state>
+	
+	<view-state id="selectSolutions" view="selectSolutions" model="registration">
+		<transition on="back" to="selectAthletes" />
+		<transition on="cancel" to="end" />
+		<transition on="refresh">
+			<render fragments="selectedSolutions"/>
+		</transition>
+		<transition on="next" to="summary">
+			<evaluate expression="competitionController.saveRegistration(flowScope.registration)"></evaluate>
+		</transition>
+	</view-state>
+	
+	<view-state id="summary" view="regCompSummary" model="registration">
+		<on-render>
+			<evaluate expression="paypalService.getPaypalInfo(flowRequestContext)" result="requestScope.paypalInfo"></evaluate>
+		</on-render>
+		<transition on="back" to="selectSolutions">
+			<evaluate expression="competitionController.undoRegistration(flowScope.registration)"></evaluate>
+		</transition>
+		<transition on="cancel" to="end">
+			<evaluate expression="competitionController.undoRegistration(flowScope.registration)"></evaluate>
+		</transition>
+	    <transition on="approved" to="approved" />
+	</view-state>
+	
+	<view-state id="approved" view="regCompApproved" model="registration">
+		<transition on="ok" to="end" />
+	</view-state>
+
+	<end-state id="end" view="redirect:comps/{id}"></end-state>
+
+</flow>                       

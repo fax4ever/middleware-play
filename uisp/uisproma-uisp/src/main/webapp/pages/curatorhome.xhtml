@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Curatori UISP
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="curator" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:dataTable value="#{curatorHome.curators}" var="item" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+			<f:facet name="header">Curatori</f:facet>
+
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+					#{item.id}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Utente</f:facet>
+					#{item.user.username}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+					#{item.fullName}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+					#{item.email}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Indirizzo</f:facet>
+					#{item.address}
+				</h:column>
+
+			<h:column>
+				<h:link value="Modifica" outcome="curator" styleClass="button">
+					<f:param name="id" value="#{item.id}" />
+				</h:link>
+			</h:column>
+
+		</h:dataTable>
+	</ui:define>
+
+</ui:composition>

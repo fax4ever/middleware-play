@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Competizioni Singole
+	</ui:define>
+	
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="comp" immediate="true" />
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:dataTable value="#{competitionHome.competitions}" var="value" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7">
+			<f:facet name="header">Campionati</f:facet>
+			
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+				#{value.id}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				#{value.name}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Inizio</f:facet>
+				<h:outputText value="#{value.start}" converter="calendar" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Fine</f:facet>
+				<h:outputText value="#{value.end}" converter="calendar" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Iscrizioni</f:facet>
+				#{value.attendanceNumber}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Disciplina</f:facet>
+				#{value.sport}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Curatore</f:facet>
+				#{value.curator}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText id="price" value="#{value.price}" size="20" required="true">
+					<f:convertNumber minFractionDigits="2" />
+				</h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Descrizione</f:facet>
+				#{value.description}
+			</h:column>
+
+			<h:column>
+				<h:link value="Modifica" outcome="comp" styleClass="button">
+					<f:param name="id" value="#{value.id}" />
+				</h:link>
+			</h:column>
+			
+			<h:column>
+				<h:link value="Partecipazioni" outcome="compdetail" styleClass="button">
+					<f:param name="id" value="#{value.id}" />
+				</h:link>
+			</h:column>
+
+		</h:dataTable>
+	</ui:define>
+
+</ui:composition>

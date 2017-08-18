@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<spring:url value="/app/regcomp?id=${comp.id}" var="regcomp" />
+
+	<div class="row">
+		<div class="col-lg-5">
+			<div class="row">
+				<div class="col-lg-7">
+					<p class="lead"><strong>${comp.name}</strong></p>
+				</div>
+				<div class="col-lg-5">
+					<a href="${regcomp}" class="btn btn-success">Nuova Iscrizione</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<ul class="list-group">
+						<c:forEach items="${comp.solutions}" var="sol" varStatus="stat">
+							<li class="list-group-item">
+								<span>${stat.count}</span>
+								<span class="text-success"><b> Scade: <fmt:formatDate pattern="dd/MM/yyyy" value="${sol.deadline.time}" /> </b></span>
+								<span class="text-muted"> ${sol.name} </span>
+								<span class="badge">${sol.price} €</span>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-7">
+			<p class="img-thumbnail marghe">${comp.description}</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-2">
+			<span class="label label-success">Da:</span>
+			<span>&#160;</span>
+			<span>
+				<fmt:formatDate pattern="dd/MM/yyyy" value="${comp.start.time}" />
+			</span>
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-success">A:</span>
+			<span>&#160;</span>
+			<span>
+				<fmt:formatDate pattern="dd/MM/yyyy" value="${comp.end.time}" />
+			</span>
+		</div>
+		<div class="col-lg-3">
+			<span class="label label-success">Prezzi:</span>
+			<span> [ ${comp.minSolution.price} - ${comp.maxSolution.price} ] € </span>
+		</div>
+		<div class="col-lg-3">
+			<span class="label label-success">Dove:</span>
+			<span> ${comp.address.street} ${champ.address.city}</span>
+		</div>
+		<div class="col-lg-2">
+			<span class="label label-success">Disciplina</span>
+			<span> ${comp.sport}</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Tessera</th>
+						<th>Cognome</th>
+						<th>Nome</th>
+						<th>Iscritto</th>
+						<th>Soluzione</th>
+						<th>Prezzo</th>
+						<th>Pagato</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${atts}" var="item" varStatus="stat">
+						<spring:message code="${item.paid}" var="paid"/>
+					
+						<tr>
+							<td>${stat.count}</td>
+							<td>${item.athlete.uispCode}</td>
+							<td>${item.athlete.surname}</td>
+							<td>${item.athlete.name}</td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${item.moment.time}" /></td>
+							<td>${item.solution.name}</td>
+							<td>${item.solution.price} €</td>
+							<td class="${fn:toLowerCase(item.paid)}">${paid}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>

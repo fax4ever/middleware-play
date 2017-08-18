@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+   
+	<jee:local-slsb id="athleteService" jndi-name="java:global/uisproma-ear/uisproma-ejb/AthleteService!com.whiterational.uisproma.business.remote.RemoteAthleteService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteAthleteService" />
+	
+	<jee:remote-slsb id="attacheService" jndi-name="java:global/uisproma-ear/uisproma-ejb/AttacheService!com.whiterational.uisproma.business.remote.RemoteAttacheService"  
+   	business-interface="com.whiterational.uisproma.business.remote.RemoteAttacheService" />
+	
+	<jee:local-slsb id="championshipAttendanceService" jndi-name="java:global/uisproma-ear/uisproma-ejb/ChampionshipAttendanceService!com.whiterational.uisproma.business.remote.RemoteChampionshipAttendanceService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteChampionshipAttendanceService" />
+	
+	<jee:local-slsb id="championshipService" jndi-name="java:global/uisproma-ear/uisproma-ejb/ChampionshipService!com.whiterational.uisproma.business.remote.RemoteChampionshipService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteChampionshipService" />
+	
+	<jee:local-slsb id="clubService" jndi-name="java:global/uisproma-ear/uisproma-ejb/ClubService!com.whiterational.uisproma.business.remote.RemoteClubService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteClubService" />
+	
+	<jee:local-slsb id="competitionAttendanceService" jndi-name="java:global/uisproma-ear/uisproma-ejb/CompetitionAttendanceService!com.whiterational.uisproma.business.remote.RemoteCompetitionAttendanceService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteCompetitionAttendanceService" />
+	
+	<jee:local-slsb id="competitionService" jndi-name="java:global/uisproma-ear/uisproma-ejb/CompetitionService!com.whiterational.uisproma.business.remote.RemoteCompetitionService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteCompetitionService" />
+	
+	<jee:local-slsb id="curatorService" jndi-name="java:global/uisproma-ear/uisproma-ejb/CuratorService!com.whiterational.uisproma.business.remote.RemoteCuratorService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteCuratorService" />
+	
+	<jee:local-slsb id="roleService" jndi-name="java:global/uisproma-ear/uisproma-ejb/RoleService!com.whiterational.uisproma.business.remote.RemoteRoleService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteRoleService" />
+	
+	<jee:local-slsb id="sportService" jndi-name="java:global/uisproma-ear/uisproma-ejb/SportService!com.whiterational.uisproma.business.remote.RemoteSportService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteSportService" />
+	
+	<jee:local-slsb id="userService" jndi-name="java:global/uisproma-ear/uisproma-ejb/UserService!com.whiterational.uisproma.business.remote.RemoteUserService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteUserService" />
+	
+	<jee:local-slsb id="eventService" jndi-name="java:global/uisproma-ear/uisproma-ejb/EventService!com.whiterational.uisproma.business.remote.RemoteEventService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemoteEventService" />
+	
+	<jee:local-slsb id="paymentService" jndi-name="java:global/uisproma-ear/uisproma-ejb/PaymentService!com.whiterational.uisproma.business.remote.RemotePaymentService" 
+	business-interface="com.whiterational.uisproma.business.remote.RemotePaymentService" />
+
+</beans>

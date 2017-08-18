@@ -1,0 +1,60 @@
+@CHARSET "US-ASCII";
+
+.mag {
+	width: 500px;
+}
+
+.gatta {
+	width: 300px;
+}
+
+.marghe {
+	padding: 12px;
+	width: 100%;
+}
+
+.site-footer {
+	position: relative;
+	margin-top: 40px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #777;
+	border-top: 1px solid #eee;
+}
+
+.inline {
+	display: inline;
+}
+
+.paid {
+	color: #468847;
+	font-weight: bolder;
+}
+
+.notpaid {
+	color: #b94a48;
+	font-weight: bolder;
+}
+
+body.modal-open {
+    overflow: hidden;
+    margin-right: 0 !important;
+}
+
+.red {
+	background-color: rgb(229, 62, 62);
+}
+
+.red a {
+	color: white;
+}
+
+.container .alert {
+	padding: 7px;
+}
+
+.container .alert-warning {
+	color: #7E602C;
+}

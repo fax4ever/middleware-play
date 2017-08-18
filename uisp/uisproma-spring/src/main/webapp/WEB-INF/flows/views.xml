@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="selectAthletes" extends="default">
+		<put-attribute name="body" value="/WEB-INF/flows/regcomp/selectAthletes.jspx" />
+	</definition>
+	
+	<definition name="show.selected.solutions" template="/WEB-INF/flows/regcomp/selectSolutions.jspx">
+        <put-attribute name="selectedSolutions" value="/WEB-INF/flows/regcomp/showSelectedSolutions.jspx"/>
+    </definition>
+    
+	<definition name="selectSolutions" extends="default">
+        <put-attribute name="body" value="show.selected.solutions"/>
+    </definition>
+    
+    <definition name="regCompSummary" extends="default">
+		<put-attribute name="body" value="/WEB-INF/flows/regcomp/regCompSummary.jspx" />
+	</definition>
+	
+	<definition name="regCompApproved" extends="default">
+		<put-attribute name="body" value="/WEB-INF/flows/regcomp/regCompApproved.jspx" />
+	</definition>
+	
+	<definition name="choseAthletes" extends="default">
+		<put-attribute name="body" value="/WEB-INF/flows/regchamp/choseAthletes.jspx" />
+	</definition>
+	
+	<definition name="regChampSummary" extends="default">
+		<put-attribute name="body" value="/WEB-INF/flows/regchamp/regChampSummary.jspx" />
+	</definition>
+	
+	<definition name="regChampApproved" extends="default">
+		<put-attribute name="body" value="/WEB-INF/flows/regchamp/regChampApproved.jspx" />
+	</definition>
+	
+</tiles-definitions>

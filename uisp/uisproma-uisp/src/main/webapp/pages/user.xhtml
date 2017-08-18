@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{user.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Indietro" immediate="true" action="userhome"></h:commandButton>
+		<h:commandButton value="#{user.actionName}" action="#{user.save}" type="submit">
+			<f:ajax immediate="false" execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{user.delete}" style="display:none" immediate="true"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+	
+		<f:metadata>
+			<f:viewParam name="name" value="#{user.entity.username}">
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{user.load}" />
+		</f:metadata>
+		
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+			<f:facet name="header">Utente</f:facet>
+		
+			<h:outputLabel value="Username" for="name" rendered="#{user.mode == 'CREATE'}" />
+			<h:inputText id="name" value="#{user.entity.username}" rendered="#{user.mode == 'CREATE'}" validator="#{user.alredyInUse}">
+				<f:validateLength minimum="3" />
+			</h:inputText>
+			<h:message for="name" styleClass="messages" rendered="#{user.mode == 'CREATE'}" />
+			
+			<h:outputLabel value="Username" for="username" rendered="#{user.mode == 'UPDATE'}" />
+			<h:outputText id="username" value="#{user.entity.username}" rendered="#{user.mode == 'UPDATE'}" />
+			<h:message for="username" styleClass="messages"  rendered="#{user.mode == 'UPDATE'}" />
+			
+			<h:outputLabel value="Ruoli" for="roles" />
+			<h:selectManyCheckbox id="roles" value="#{user.roles}" styleClass="buttonset">
+   				<f:selectItem itemValue="ADMINISTRATOR" itemLabel="Amministratore" />
+   				<f:selectItem itemValue="CURATOR" itemLabel="Curatore" />
+   				<f:selectItem itemValue="ATTACHE" itemLabel="Addetto" />
+   				<f:selectItem itemValue="REFEREE" itemLabel="Arbitro" />
+   			</h:selectManyCheckbox>
+   			<h:message for="roles" styleClass="messages"></h:message>
+			
+			<h:outputLabel value="Password" for="password" />
+			<h:inputSecret id="password" value="#{user.entity.password}">
+				<f:validateLength minimum="3" />
+			</h:inputSecret>
+			<h:message for="password" styleClass="messages"></h:message>
+			
+			<h:outputLabel value="Conferma Password" for="confirm" />
+			<h:inputSecret id="confirm" value="#{user.confirmPassword}">
+				<f:validateLength minimum="3" />
+			</h:inputSecret>
+			<h:message for="confirm" styleClass="messages"></h:message>
+		</h:panelGrid>
+		
+	</ui:define>
+
+</ui:composition>

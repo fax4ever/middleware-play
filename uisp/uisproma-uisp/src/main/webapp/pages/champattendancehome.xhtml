@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Partecipazioni ai Campionati
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Menu" outcome="/menu" />
+		<h:link value="Nuovo" outcome="champattendance.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<div class="box">
+
+			<h:panelGrid id="filter" columns="4" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+
+				<h:outputLabel value="Tessera" for="uispCode" />
+				<h:outputLabel value="Cognome" for="surname" />
+				<h:outputLabel value="Addetto" for="athlete" />
+				<h:outputLabel value="Società Sportiva" for="club" />
+
+				<h:inputText value="#{champAttendanceCRUD.filter.uispCode}" id="uispcode" styleClass="mini" />
+				<h:inputText value="#{champAttendanceCRUD.filter.surname}" id="surname" styleClass="mini" />
+
+				<h:selectOneMenu id="attache" value="#{champAttendanceCRUD.filter.attache}" styleClass="miniselect">
+					<f:selectItems value="#{selectEntityProducer.attaches}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="club" value="#{champAttendanceCRUD.filter.club}" styleClass="select">
+					<f:selectItems value="#{selectEntityProducer.clubs}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Numero Rate" for="stepsNumber" />
+				<h:outputLabel value="Rate Pagate (Almeno)" for="stepsPaid" />
+				<h:outputLabel value="Pagato Tutte" for="paidAll" />
+				<h:outputLabel value="Campionato" for="competition" />
+
+				<h:selectOneMenu id="stepsNumber" value="#{champAttendanceCRUD.filter.stepsNumber}" styleClass="miniselect">
+					<f:selectItems value="#{selectItemProducer.stepsNumber}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="stepsPaid" value="#{champAttendanceCRUD.filter.stepsPaid}" styleClass="miniselect">
+					<f:selectItems value="#{selectItemProducer.stepsNumber}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="paid" value="#{champAttendanceCRUD.filter.paidAll}" styleClass="miniselect">
+					<f:selectItems value="#{selectItemProducer.paid}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="competition" value="#{champAttendanceCRUD.filter.championship}" styleClass="select">
+					<f:selectItems value="#{selectEntityProducer.championships}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+
+			<div>
+				<h:panelGrid columns="8" cellpadding="0" cellspacing="0">
+					<h:commandLink value="" action="#{champAttendanceCRUD.search}" styleClass="ciao button">
+						<h:graphicImage library="images" name="find.png" alt="Cerca" height="16px" />
+						<f:ajax execute="filter" render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{champAttendanceCRUD.first}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/first.png" alt="Prima Pagina" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{champAttendanceCRUD.fastRewind}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastrewind.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{champAttendanceCRUD.previous}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/previous.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:selectOneRadio value="#{champAttendanceCRUD.mark}" styleClass="buttonset" id="markers">
+						<f:selectItems value="#{champAttendanceCRUD.markers}" />
+						<f:ajax listener="#{champAttendanceCRUD.change}" execute="@this" render="athletes" />
+					</h:selectOneRadio>
+					<h:commandLink action="#{champAttendanceCRUD.next}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/next.png" alt="Prossima" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{champAttendanceCRUD.fastForward}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastforward.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{champAttendanceCRUD.last}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/last.png" alt="Ultima Pagina" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+				</h:panelGrid>
+			</div>
+
+			<h:dataTable id="athletes" value="#{champAttendanceCRUD.page.items}" var="item" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7" rows="#{config['athlete.pageSize']}">
+
+				<h:column>
+					<f:facet name="header">#Tessera</f:facet>
+					#{item.athlete.uispCode}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Cognome</f:facet>
+					#{item.athlete.surname}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{item.athlete.name}
+				</h:column>
+
+				<h:column rendered="#{champAttendanceCRUD.page.maxStep > 0}">
+					<f:facet name="header">1° Rata</f:facet>
+					#{champAttendanceCRUD.getPaidInfo(item, 0)}
+				</h:column>
+
+				<h:column rendered="#{champAttendanceCRUD.page.maxStep > 1}">
+					<f:facet name="header">2° Rata</f:facet>
+					#{champAttendanceCRUD.getPaidInfo(item, 1)}
+				</h:column>
+
+				<h:column rendered="#{champAttendanceCRUD.page.maxStep > 2}">
+					<f:facet name="header">3° Rata</f:facet>
+					#{champAttendanceCRUD.getPaidInfo(item, 2)}
+				</h:column>
+
+				<h:column rendered="#{champAttendanceCRUD.page.maxStep > 3}">
+					<f:facet name="header">4° Rata</f:facet>
+					#{champAttendanceCRUD.getPaidInfo(item, 3)}
+				</h:column>
+
+				<h:column rendered="#{champAttendanceCRUD.page.maxStep > 4}">
+					<f:facet name="header">5° Rata</f:facet>
+					#{champAttendanceCRUD.getPaidInfo(item, 4)}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Addetto</f:facet>
+					#{item.attache}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Società Sportiva</f:facet>
+					#{item.attache.club}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Campionato</f:facet>
+					#{item.championship}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Iscritto</f:facet>
+					<h:outputText value="#{item.moment}" converter="calendar" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Azioni</f:facet>
+					<h:link value="Modifica" outcome="champattendance" styleClass="button">
+						<f:param name="id" value="#{item.id}" />
+					</h:link>
+				</h:column>
+
+			</h:dataTable>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

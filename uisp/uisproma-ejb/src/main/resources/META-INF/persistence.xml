@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="sportroma" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>sportromaDS</jta-data-source>
+		<mapping-file>META-INF/orm.xml</mapping-file>
+		<class>com.whiterational.uisproma.business.entity.User</class>
+		<class>com.whiterational.uisproma.business.entity.Athlete</class>
+		<class>com.whiterational.uisproma.business.entity.Attache</class>
+		<class>com.whiterational.uisproma.business.entity.championship.Championship</class>
+		<class>com.whiterational.uisproma.business.entity.competition.Competition</class>
+		<class>com.whiterational.uisproma.business.entity.Curator</class>
+		<class>com.whiterational.uisproma.business.entity.Event</class>
+		<class>com.whiterational.uisproma.business.entity.Attendance</class>
+		<class>com.whiterational.uisproma.business.entity.Sport</class>
+		<class>com.whiterational.uisproma.business.entity.SportsClub</class>
+		<class>com.whiterational.uisproma.business.entity.Address</class>
+		<class>com.whiterational.uisproma.business.entity.Person</class>
+		<class>com.whiterational.uisproma.business.entity.Role</class>
+		<class>com.whiterational.uisproma.business.entity.competition.Solution</class>
+		<class>com.whiterational.uisproma.business.entity.championship.Step</class>
+		<class>com.whiterational.uisproma.business.entity.Payment</class>
+		<class>com.whiterational.uisproma.business.entity.CuratorPayment</class>
+		<class>com.whiterational.uisproma.business.entity.AttachePayment</class>
+		<class>com.whiterational.uisproma.business.entity.championship.ChampionshipAttendance</class>
+		<class>com.whiterational.uisproma.business.entity.competition.CompetitionAttendance</class>
+		<class>com.whiterational.uisproma.business.entity.Fee</class>
+		<class>com.whiterational.uisproma.business.entity.championship.ChampionshipFee</class>
+		<class>com.whiterational.uisproma.business.entity.competition.CompetitionFee</class>
+		
+		<properties>
+			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
+			<property name="eclipselink.application-location" value="./" />
+			<property name="eclipselink.create-ddl-jdbc-file-name" value="uisp_createDDLjdbc.sql" />
+			<property name="eclipselink.drop-ddl-jdbc-file-name" value="uisp_dropDDLjdbc.sql" />
+			<property name="eclipselink.ddl-generation.output-mode" value="both" />
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.query-results-cache" value="false"/>
+		</properties>
+	</persistence-unit>
+</persistence>

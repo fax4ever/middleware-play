@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+	xmlns:my="http://java.sun.com/jsf/composite/components" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{champ.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Campionati" outcome="champhome" />
+		<h:link value="Partecipazioni" outcome="champdetail" rendered="#{champ.entity.id != null}">
+			<f:param name="id" value="#{champ.entity.id}" />
+		</h:link>
+		<h:commandButton value="#{champ.actionName}" action="#{champ.save}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Applica" action="#{champ.apply}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{champ.delete}" style="display:none" immediate="true"></h:commandButton>
+		<h:commandButton value="Aggiungi Rata" action="#{champ.entity.addStep}" styleClass="ciao">
+			<f:ajax execute="steps" render="steps" />
+		</h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{champ.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{champ.load}" />
+		</f:metadata>
+
+		<h:panelGrid columns="2" styleClass="tank">
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Dati</f:facet>
+
+				<h:outputLabel value="Codice" for="code" />
+				<h:outputText id="code" value="#{champ.code}" />
+				<h:message for="code" styleClass="messages" />
+
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText id="name" value="#{champ.entity.name}" />
+				<h:message for="name" styleClass="messages" />
+
+				<h:outputLabel value="Inizio" for="start" />
+				<my:rendezvous value="#{champ.entity.start}" pattern="dd/MM/yyyy"/>
+				<h:message for="start" styleClass="messages" />
+
+				<h:outputLabel value="Fine" for="end" />
+				<my:rendezvous value="#{champ.entity.end}" pattern="dd/MM/yyyy"/>
+				<h:message for="end" styleClass="messages" />
+
+				<h:outputLabel value="Disciplina" for="sport" />
+				<h:selectOneMenu id="sport" value="#{champ.sport}">
+					<f:selectItems value="#{champ.sports}" />
+				</h:selectOneMenu>
+				<h:message for="sport" styleClass="messages" />
+
+				<h:outputLabel value="Descrizione" for="description" />
+				<h:inputTextarea id="description" value="#{champ.entity.description}" />
+				<h:message for="description" styleClass="messages" />
+
+				<h:outputLabel value="Prezzo" for="price" />
+				<h:inputText id="price" value="#{champ.entity.price}" styleClass="amount" size="20" disabled="true">
+					<f:convertNumber minFractionDigits="2" />
+				</h:inputText>
+				<h:message for="price" styleClass="messages" />
+
+				<h:outputLabel value="Curato da" for="curator" />
+				<h:outputText id="curator" value="#{champ.entity.curator}" />
+				<h:message for="code" styleClass="messages" />
+				
+				<h:outputLabel value="Stagione" for="season" />
+				<h:inputText id="season" value="#{champ.entity.season}" />
+				<h:message for="season" styleClass="messages" />
+
+			</h:panelGrid>
+			
+			<h:panelGroup>
+			
+				<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+					<f:facet name="header">Location</f:facet>
+					
+					<h:outputLabel value="Indirizzo" for="street" />
+					<h:inputText id="street" value="#{champ.entity.address.street}" />
+					<h:message for="street" styleClass="messages" />
+					
+					<h:outputLabel value="Città" for="city" />
+					<h:inputText id="city" value="#{champ.entity.address.city}" />
+					<h:message for="city" styleClass="messages" />
+					
+					<h:outputLabel value="Stato" for="state" />
+					<h:inputText id="state" value="#{champ.entity.address.state}" />
+					<h:message for="state" styleClass="messages" />
+					
+					<h:outputLabel value="CAP" for="zip" />
+					<h:inputText id="zip" value="#{champ.entity.address.zip}" />
+					<h:message for="zip" styleClass="messages" />
+				
+				</h:panelGrid>
+
+				<h:dataTable id="steps" value="#{champ.entity.steps}" var="step" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+					<f:facet name="header">Rate</f:facet>
+	
+					<h:column>
+						<f:facet name="header">Id</f:facet>
+						#{step.id}
+					</h:column>
+	
+					<h:column>
+						<f:facet name="header">Scade il</f:facet>
+						<h:inputText id="deadline" styleClass="date" value="#{step.deadline}" converter="calendar" />
+						<h:message for="deadline" />
+					</h:column>
+	
+					<h:column>
+						<f:facet name="header">Importo</f:facet>
+						<h:inputText id="stepprice" size="20" value="#{step.price}" styleClass="amount">
+							<f:convertNumber minFractionDigits="2" />
+							<f:ajax listener="#{champ.applySum}" execute="@all" render="@all"/>
+						</h:inputText>
+						<h:message for="stepprice" />
+					</h:column>
+	
+					<h:column>
+						<f:facet name="header">Azioni</f:facet>
+						<h:commandButton value="Elimina" action="#{champ.entity.deleteStep(step)}" immediate="true" styleClass="button" rendered="#{champ.entity.canRemove(step)}" />
+					</h:column>
+	
+				</h:dataTable>
+			
+			</h:panelGroup>
+
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

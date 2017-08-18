@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<div class="left">
+		<h:link outcome="/menu">
+			<h:graphicImage library="images" name="uisp.jpg" alt="Liberi Nantes" height="100px" />
+		</h:link>
+		
+		<span class="mainTitle">	
+			<ui:insert name="title">
+				UISP Roma
+			</ui:insert>
+		</span>
+	</div>
+	<div class="right">
+		<div class="loggeduser">#{loginPresenter.loggedUsername}</div>
+		<h:commandLink rendered="#{loginPresenter.loggedUsername != null}" styleClass="button" action="#{loginPresenter.logout}" value="Esci" immediate="true"/>
+	</div>
+	<div class="clear"></div>
+	
+</ui:composition>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Addetti
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="attache" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:dataTable value="#{attachePresenter.all}" var="item" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7">
+			<f:facet name="header">Addetti delle Società Sportive</f:facet>
+
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+					#{item.id}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Utente</f:facet>
+					#{item.user.username}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+					#{item.fullName}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+					#{item.email}
+				</h:column>
+
+			<h:column>
+				<f:facet name="header">Indirizzo</f:facet>
+					#{item.address}
+				</h:column>
+				
+			<h:column>
+				<f:facet name="header">Società</f:facet>
+					#{item.club.name}
+				</h:column>
+
+			<h:column>
+				<h:link value="Modifica" outcome="attache" styleClass="button">
+					<f:param name="id" value="#{item.id}" />
+				</h:link>
+			</h:column>
+
+		</h:dataTable>
+	</ui:define>
+
+</ui:composition>

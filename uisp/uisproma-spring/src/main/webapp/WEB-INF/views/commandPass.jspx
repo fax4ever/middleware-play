@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	<form:form commandName="commandPass">
+		<form:label path="name">Nome</form:label>
+		<form:input path="name" />
+		
+		<form:label path="fixed">Fixed</form:label>
+		<form:checkbox path="fixed" />
+		
+		<table>
+			<tbody>
+				<c:forEach items="${commandPass.passes}" var="passe" varStatus="status">
+					<tr>
+						<td>
+							<form:label path="passes[${status.index}].value">Minipass</form:label>
+							<form:input path="passes[${status.index}].value"/>
+						</td>
+						<td>
+							<form:label path="passes[${status.index}].shimmia">Milen</form:label>
+							<form:checkbox path="passes[${status.index}].shimmia"/>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		
+		<input type="submit" value="go" />
+	</form:form>
+</div>

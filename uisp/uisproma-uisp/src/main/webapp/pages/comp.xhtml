@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:my="http://java.sun.com/jsf/composite/components" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{comp.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Campionati" outcome="comphome" />
+		<h:link value="Partecipazioni" outcome="compdetail" rendered="#{comp.entity.id != null}">
+			<f:param name="id" value="#{comp.entity.id}" />
+		</h:link>
+		<h:commandButton value="#{comp.actionName}" action="#{comp.save}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Applica" action="#{comp.apply}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{comp.delete}" style="display:none" immediate="true"></h:commandButton>
+		<h:commandButton value="Aggiungi Soluzione" action="#{comp.entity.addSolution}" styleClass="ciao">
+			<f:ajax execute="solutions" render="solutions" />
+		</h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{comp.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{comp.load}" />
+		</f:metadata>
+
+		<h:panelGrid columns="2" styleClass="tank">
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Dati</f:facet>
+
+				<h:outputLabel value="Codice" for="code" />
+				<h:outputText id="code" value="#{comp.code}" />
+				<h:message for="code" styleClass="messages" />
+
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText id="name" value="#{comp.entity.name}" />
+				<h:message for="name" styleClass="messages" />
+
+				<h:outputLabel value="Inizio" for="start" />
+				<my:rendezvous value="#{comp.entity.start}" pattern="dd/MM/yyyy"/>
+				<h:message for="start" styleClass="messages" />
+
+				<h:outputLabel value="Fine" for="end" />
+				<my:rendezvous value="#{comp.entity.end}" pattern="dd/MM/yyyy"/>
+				<h:message for="end" styleClass="messages" />
+
+				<h:outputLabel value="Disciplina" for="sport" />
+				<h:selectOneMenu id="sport" value="#{comp.sport}">
+					<f:selectItems value="#{comp.sports}" />
+				</h:selectOneMenu>
+				<h:message for="sport" styleClass="messages" />
+
+				<h:outputLabel value="Descrizione" for="description" />
+				<h:inputTextarea id="description" value="#{comp.entity.description}" />
+				<h:message for="description" styleClass="messages" />
+
+				<h:outputLabel value="Prezzo" for="price" />
+				<h:inputText id="price" value="#{comp.entity.price}" styleClass="amount" size="20" disabled="true">
+					<f:convertNumber minFractionDigits="2" />
+				</h:inputText>
+				<h:message for="price" styleClass="messages" />
+
+				<h:outputLabel value="Curato da" for="curator" />
+				<h:outputText id="curator" value="#{comp.entity.curator}" />
+				<h:message for="code" styleClass="messages" />
+				
+				<h:outputLabel value="Stagione" for="season" />
+				<h:inputText id="season" value="#{comp.entity.season}" />
+				<h:message for="season" styleClass="messages" />
+				
+				<h:outputLabel value="Indirizzo" for="street" />
+				<h:inputText id="street" value="#{comp.entity.address.street}" />
+				<h:message for="street" styleClass="messages" />
+				
+				<h:outputLabel value="Città" for="city" />
+				<h:inputText id="city" value="#{comp.entity.address.city}" />
+				<h:message for="city" styleClass="messages" />
+				
+				<h:outputLabel value="Stato" for="state" />
+				<h:inputText id="state" value="#{comp.entity.address.state}" />
+				<h:message for="state" styleClass="messages" />
+				
+				<h:outputLabel value="CAP" for="zip" />
+				<h:inputText id="zip" value="#{comp.entity.address.zip}" />
+				<h:message for="zip" styleClass="messages" />
+
+			</h:panelGrid>
+
+			<h:dataTable id="solutions" value="#{comp.entity.solutions}" var="solution" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Soluzioni</f:facet>
+
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					#{solution.id}
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					<h:inputTextarea id="solname" value="#{solution.name}" styleClass="mini" />
+					<h:message for="description" styleClass="messages" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Scade il</f:facet>
+					<h:inputText id="deadline" styleClass="date" value="#{solution.deadline}" converter="calendar" />
+					<h:message for="deadline" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Importo</f:facet>
+					<h:inputText id="solprice" size="20" value="#{solution.price}" styleClass="amount">
+						<f:convertNumber minFractionDigits="2" />
+						<f:ajax listener="#{comp.applyMax}" execute="@all" render="@all" />
+					</h:inputText>
+					<h:message for="solprice" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">Azioni</f:facet>
+					<h:commandButton value="Elimina" action="#{comp.entity.deleteSolution(solution)}" immediate="true" styleClass="button" rendered="#{comp.entity.canRemove(solution)}" />
+				</h:column>
+
+			</h:dataTable>
+
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Discipline
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="sport" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:dataTable value="#{sportPresenter.all}" var="sport" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7">
+			<f:facet name="header">Discipline Sportive</f:facet>
+
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+				#{sport.id}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				#{sport.name}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Descrizione</f:facet>
+				#{sport.description}
+			</h:column>
+
+			<h:column>
+				<h:link value="Modifica" outcome="sport" styleClass="button">
+					<f:param name="id" value="#{sport.id}" />
+				</h:link>
+			</h:column>
+
+		</h:dataTable>
+	</ui:define>
+
+</ui:composition>

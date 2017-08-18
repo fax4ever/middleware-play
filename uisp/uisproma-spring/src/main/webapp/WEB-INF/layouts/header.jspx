@@ -1,0 +1,40 @@
+<div id="header" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"  
+	xmlns:spring="http://www.springframework.org/tags"
+	version="2.0">
+	
+	<jsp:directive.page contentType="text/html;charset=UTF-8" /> 
+	<jsp:output omit-xml-declaration="yes" />
+	<spring:url value="/app/logout" var="logoutUrl" />
+	<spring:url value="/app/user" var="userUrl" />
+	<spring:url value="/app/home" var="homeUrl" />
+	
+	<div class="row">
+		<div class="col-lg-3">
+			<spring:url value="/resources/images/valori.jpg" var="valori" />
+			<a href="${homeUrl}">
+				<img class="gatta" src="${valori}" />
+			</a>
+		</div>
+		<div class="col-lg-9">
+			<div class="page-header">
+				<h1>
+					Uisp Roma <small>Sistema di Prenotazione Gare</small>
+				</h1>
+			</div>
+			
+			<p>
+				<c:if test="${user != null}">
+					<span>Addetto: <a href="${homeUrl}">${user.fullName}</a> - Società Sportiva: <a href="${homeUrl}">${user.club.name}</a></span>
+				</c:if>
+				<c:if test="${user == null}">
+					<span class="alert alert-warning">L'utente corrente non è un <b>addetto</b> di una società sportiva.</span>
+				</c:if>
+				
+				<span class="pull-right"><a href="${userUrl}"> Cambio Password </a> - <a href="${logoutUrl}"> Esci </a></span>
+			</p>
+			
+		</div>
+	</div>
+    
+</div>

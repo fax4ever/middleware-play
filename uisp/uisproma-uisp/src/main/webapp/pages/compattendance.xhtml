@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{compattendace.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Partecipazioni" outcome="compattendancehome" />
+		<h:commandButton value="#{compattendance.actionName}" action="#{compattendance.save}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Applica" action="#{compattendance.apply}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{compattendance.delete}" style="display:none" immediate="true"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{compattendance.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{compattendance.load}" />
+		</f:metadata>
+
+		<h:message globalOnly="true" id="messages" styleClass="messages" />
+
+		<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+
+			<h:outputLabel value="Codice" for="code" />
+			<h:outputText id="code" value="#{compattendance.code}" />
+			<h:message for="code" styleClass="messages" />
+
+			<h:outputLabel value="Società Sportiva" for="club" />
+			<h:selectOneMenu id="club" value="#{compattendance.club}" required="true" styleClass="select spartaco" onchange="SportRoma.resetSelect('attache'); SportRoma.resetSelect('athlete');">
+				<f:selectItems value="#{compattendance.clubs}" />
+				<f:ajax render="attache athlete" />
+			</h:selectOneMenu>
+			<h:message for="club" styleClass="messages" />
+			
+			<h:outputLabel value="Addeto" for="attache" />
+			<h:selectOneMenu id="attache" value="#{compattendance.attache}" required="true" styleClass="select" disabled="#{compattendance.club == null}" >
+				<f:selectItems value="#{compattendance.attaches}" />
+			</h:selectOneMenu>
+			<h:message for="attache" styleClass="messages" />
+			
+			<h:outputLabel value="Atleta" for="athlete" />
+			<h:selectOneMenu id="athlete" value="#{compattendance.athlete}" required="true" styleClass="select" disabled="#{compattendance.club == null}" >
+				<f:selectItems value="#{compattendance.athletes}" />
+			</h:selectOneMenu>
+			<h:message for="athlete" styleClass="messages" />
+			
+			<h:outputLabel value="Gara Singola" for="competition" />
+			<h:selectOneMenu id="competition" value="#{compattendance.competition}" required="true" styleClass="select spartaco" onchange="SportRoma.resetSelect('solution')">
+				<f:selectItems value="#{compattendance.competitions}" />
+				<f:ajax render="solution" />
+			</h:selectOneMenu>
+			<h:message for="competition" styleClass="messages" />
+			
+			<h:outputLabel value="Soluzione" for="solution" />
+			<h:selectOneMenu id="solution" value="#{compattendance.solution}" required="true" styleClass="select" disabled="#{compattendance.entity.competition == null}" >
+				<f:selectItems value="#{compattendance.solutions}" />
+			</h:selectOneMenu>
+			<h:message for="solution" styleClass="messages" />
+
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

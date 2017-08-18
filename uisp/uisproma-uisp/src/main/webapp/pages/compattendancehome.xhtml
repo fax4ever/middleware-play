@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Partecipazioni alle Gare Singole
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Menu" outcome="/menu" />
+		<h:link value="Nuovo" outcome="compattendance" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<div class="box">
+
+			<h:panelGrid id="filter" columns="4" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+
+				<h:outputLabel value="Tessera" for="uispCode" />
+				<h:outputLabel value="Cognome" for="surname" />
+				<h:outputLabel value="Società Sportiva" for="club" />
+				<h:outputLabel value="Soluzione" for="solution" />
+				
+				<h:inputText value="#{compAttendanceCRUD.filter.uispCode}" id="uispcode" styleClass="mini" />
+				<h:inputText value="#{compAttendanceCRUD.filter.surname}" id="surname" styleClass="mini" />
+				<h:selectOneMenu id="club" value="#{compAttendanceCRUD.filter.club}" styleClass="select">
+					<f:selectItems value="#{selectEntityProducer.clubs}" />
+				</h:selectOneMenu>
+				<h:inputText value="#{compAttendanceCRUD.filter.solutionName}" id="solutionName" styleClass="mini" />
+				
+				<h:outputLabel value="Pagato" for="paid" />
+				<h:outputLabel value="Addetto" for="attache" />
+				<h:outputLabel value="Gara Singola" for="competition" />
+				<h:panelGroup></h:panelGroup>
+				
+				<h:selectOneMenu id="paid" value="#{compAttendanceCRUD.filter.paid}" styleClass="miniselect">
+					<f:selectItems value="#{selectItemProducer.paid}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="attache" value="#{compAttendanceCRUD.filter.attache}" styleClass="miniselect">
+					<f:selectItems value="#{selectEntityProducer.attaches}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="competition" value="#{compAttendanceCRUD.filter.competition}" styleClass="select">
+					<f:selectItems value="#{selectEntityProducer.competitions}" />
+				</h:selectOneMenu>
+
+			</h:panelGrid>
+
+			<div>
+				<h:panelGrid columns="8" cellpadding="0" cellspacing="0">
+					<h:commandLink value="" action="#{compAttendanceCRUD.search}" styleClass="ciao button">
+						<h:graphicImage library="images" name="find.png" alt="Cerca" height="16px" />
+						<f:ajax execute="filter" render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{compAttendanceCRUD.first}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/first.png" alt="Prima Pagina" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{compAttendanceCRUD.fastRewind}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastrewind.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{compAttendanceCRUD.previous}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/previous.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:selectOneRadio value="#{compAttendanceCRUD.mark}" styleClass="buttonset" id="markers">
+						<f:selectItems value="#{compAttendanceCRUD.markers}" />
+						<f:ajax listener="#{compAttendanceCRUD.change}" execute="@this" render="athletes" />
+					</h:selectOneRadio>
+					<h:commandLink action="#{compAttendanceCRUD.next}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/next.png" alt="Prossima" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{compAttendanceCRUD.fastForward}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastforward.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{compAttendanceCRUD.last}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/last.png" alt="Ultima Pagina" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+				</h:panelGrid>
+			</div>
+
+			<h:dataTable id="athletes" value="#{compAttendanceCRUD.page.items}" var="item" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7" rows="#{config['athlete.pageSize']}">
+
+				<h:column>
+					<f:facet name="header">#Tessera</f:facet>
+					#{item.athlete.uispCode}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Cognome</f:facet>
+					#{item.athlete.surname}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{item.athlete.name}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Soluzione</f:facet>
+					#{item.solution}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Pagato</f:facet>
+					<h:outputText value="#{msg[item.paid]}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Addetto</f:facet>
+					#{item.attache}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Società Sportiva</f:facet>
+					#{item.attache.club}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Gara</f:facet>
+					#{item.competition}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Iscritto</f:facet>
+					<h:outputText value="#{item.moment}" converter="calendar" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Azioni</f:facet>
+					<h:link value="Modifica" outcome="compattendance" styleClass="button">
+						<f:param name="id" value="#{item.id}" />
+					</h:link>
+				</h:column>
+
+			</h:dataTable>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

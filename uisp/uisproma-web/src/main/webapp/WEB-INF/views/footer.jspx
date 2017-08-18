@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="footer" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+	<div class="site-footer">
+		<p class="pull-right"> <span> © 2013 </span> <a href="http://www.uisp.it/roma/" target="_blank" class="navbar-link"> Uisp Comitato di Roma</a>. <span> Tutti i diretti riservati. </span></p>
+	</div>
+
+</div>

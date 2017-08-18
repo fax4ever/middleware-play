@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Tessere degli Atleti
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" immediate="true" />
+		<h:commandButton value="Nuovo" action="athlete" immediate="true" />
+		<h:commandButton value="Importa" action="athleteimport" immediate="true" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<div class="box">
+
+			<h:panelGrid id="filter" columns="6" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+
+				<h:outputLabel value="#Tessera" for="uispcode" />
+				<h:outputLabel value="Cognome" for="surname" />
+				<h:outputLabel value="Nome" for="name" />
+				<h:outputLabel value="Classe" for="year" />
+				<h:outputLabel value="Società Sportiva" for="club" />
+				<h:outputLabel value="Ricerca" for="year" />
+
+				<h:inputText value="#{athleteCRUD.filter.uispCode}" id="uispcode" styleClass="mini" />
+				<h:inputText value="#{athleteCRUD.filter.surname}" id="surname" styleClass="mini" />
+				<h:inputText value="#{athleteCRUD.filter.name}" id="name" styleClass="mini" />
+				<h:selectOneMenu id="year" value="#{athleteCRUD.filter.year}" styleClass="miniselect">
+					<f:selectItems value="#{athleteCRUD.years}" />
+				</h:selectOneMenu>
+				<h:selectOneMenu id="club" value="#{athleteCRUD.filter.club}" styleClass="select">
+					<f:selectItems value="#{athleteCRUD.clubs}" />
+				</h:selectOneMenu>
+				<h:commandLink value="" action="#{athleteCRUD.search}" styleClass="ciao">
+					<h:graphicImage library="images" name="find.png" alt="Campionati" height="24px" />
+					<f:ajax execute="filter" render="athletes markers"></f:ajax>
+				</h:commandLink>
+
+			</h:panelGrid>
+
+			<div>
+				<h:panelGrid columns="7" cellpadding="0" cellspacing="0">
+					<h:commandLink action="#{athleteCRUD.first}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/first.png" alt="Prima Pagina" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{athleteCRUD.fastRewind}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastrewind.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{athleteCRUD.previous}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/previous.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:selectOneRadio value="#{athleteCRUD.mark}" styleClass="buttonset" id="markers">
+						<f:selectItems value="#{athleteCRUD.markers}" />
+						<f:ajax listener="#{athleteCRUD.change}" execute="@this" render="athletes" />
+					</h:selectOneRadio>
+					<h:commandLink action="#{athleteCRUD.next}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/next.png" alt="Prossima" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{athleteCRUD.fastForward}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastforward.png" alt="Precedente" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{athleteCRUD.last}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/last.png" alt="Ultima Pagina" height="16px" />
+						<f:ajax render="athletes markers"></f:ajax>
+					</h:commandLink>
+				</h:panelGrid>
+			</div>
+
+			<h:dataTable id="athletes" value="#{athleteCRUD.page.athletes}" var="item" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7" rows="#{config['athlete.pageSize']}">
+
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+					#{item.id}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Numero Tessera</f:facet>
+					#{item.uispCode}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+					#{item.fullName}
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Luogo di Nascita</f:facet>
+					<h:outputText value="#{item.hometown}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Data di Nascita</f:facet>
+					<h:outputText value="#{item.birthDate}" converter="calendar" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">Società Sportiva</f:facet>
+					#{item.club.name}
+				</h:column>
+
+				<h:column>
+					<h:link value="Modifica" outcome="athlete" styleClass="button">
+						<f:param name="id" value="#{item.id}" />
+					</h:link>
+				</h:column>
+
+			</h:dataTable>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

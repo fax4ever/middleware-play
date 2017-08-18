@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Società Sportive
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="club" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<div class="box">
+		
+			<h:panelGrid id="filter" columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText value="#{clubCRUD.filter.name}" id="name" />
+				<h:commandLink value="" action="#{clubCRUD.search}" styleClass="ciao">
+					<h:graphicImage library="images" name="find.png" alt="Campionati" height="24px" />
+					<f:ajax execute="filter" render="clubs markers"></f:ajax>
+				</h:commandLink>
+			</h:panelGrid>
+			
+			<div>
+				<h:panelGrid columns="7" cellpadding="0" cellspacing="0">
+					<h:commandLink action="#{clubCRUD.first}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/first.png" alt="Prima Pagina" height="16px" />
+						<f:ajax render="clubs markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{clubCRUD.fastRewind}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastrewind.png" alt="Precedente" height="16px" />
+						<f:ajax render="clubs markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{clubCRUD.previous}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/previous.png" alt="Precedente" height="16px" />
+						<f:ajax render="clubs markers"></f:ajax>
+					</h:commandLink>
+					<h:selectOneRadio value="#{clubCRUD.mark}" styleClass="buttonset" id="markers">
+						<f:selectItems value="#{clubCRUD.markers}" />
+						<f:ajax listener="#{clubCRUD.change}" execute="@this" render="clubs" />
+					</h:selectOneRadio>
+					<h:commandLink action="#{clubCRUD.next}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/next.png" alt="Prossima" height="16px" />
+						<f:ajax render="clubs markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{clubCRUD.fastForward}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/fastforward.png" alt="Precedente" height="16px" />
+						<f:ajax render="clubs markers"></f:ajax>
+					</h:commandLink>
+					<h:commandLink action="#{clubCRUD.last}" value="" styleClass="button">
+						<h:graphicImage library="images" name="arrows/last.png" alt="Ultima Pagina" height="16px" />
+						<f:ajax render="clubs markers"></f:ajax>
+					</h:commandLink>
+				</h:panelGrid>
+			</div>
+
+			<h:dataTable id="clubs" value="#{clubCRUD.page.clubs}" var="item" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0" rows="#{config['athlete.pageSize']}">
+				<f:facet name="header">Società Sportive</f:facet>
+
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+				#{item.id}
+			</h:column>
+
+				<h:column>
+					<f:facet name="header">Nome</f:facet>
+				#{item.name}
+			</h:column>
+
+				<h:column>
+					<f:facet name="header">Codice UISP</f:facet>
+				#{item.freshman}
+			</h:column>
+
+				<h:column>
+					<f:facet name="header">#Addetti</f:facet>
+				#{item.attacheNumber}
+			</h:column>
+
+				<h:column>
+					<f:facet name="header">#Atleti</f:facet>
+				#{item.athleteNumber}
+			</h:column>
+
+				<h:column>
+					<h:link value="Modifica" outcome="club" styleClass="button">
+						<f:param name="id" value="#{item.id}" />
+					</h:link>
+				</h:column>
+
+				<h:column>
+					<h:link value="Addetti" outcome="clubdetail" styleClass="button">
+						<f:param name="id" value="#{item.id}" />
+					</h:link>
+				</h:column>
+				
+				<h:column>
+					<h:link value="Atleti" outcome="clubpeople" styleClass="button">
+						<f:param name="id" value="#{item.id}" />
+					</h:link>
+				</h:column>
+			</h:dataTable>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

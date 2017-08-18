@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:t="http://myfaces.apache.org/tomahawk" template="/templates/multipart.xhtml">
+
+	<ui:define name="title">
+		Atleti
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" immediate="true" />
+		<h:commandButton value="Atleti" action="athletehome" immediate="true" />
+		<h:commandButton value="Nuovo" action="athlete" immediate="true" />
+	</ui:define>
+
+	<ui:define name="content">
+			
+		<div class="middlebox">
+			<h:panelGrid columns="2" styleClass="ui-widget ui-state-default ui-corner-all">
+				<f:facet name="header">
+					Importa Atleti
+				</f:facet>
+				<t:inputFileUpload id="file" value="#{athleteHome.file}" required="true" />
+				<h:commandButton value="Avvio" action="#{athleteHome.importFile}" styleClass="button" />
+			</h:panelGrid>
+			
+			<h:messages globalOnly="true" id="messages" styleClass="messages"></h:messages>
+		</div>
+		
+	</ui:define>
+
+</ui:composition>

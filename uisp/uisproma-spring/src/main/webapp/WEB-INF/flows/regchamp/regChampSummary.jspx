@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<div id="selectedSolutions" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<form:form id="selectSolutionsForm" action="${flowExecutionUrl}"
+				modelAttribute="registration">
+
+				<div class="row">
+					<div class="col-lg-6">
+						<p class="lead">
+							<strong>Riepilogo iscrizione</strong>
+						<p>Le partecipazioni sono state correttamente registrate.</p>
+						</p>
+					</div>
+					<div class="col-lg-6">
+						<div class="btn-group">
+							<button type="submit" name="_eventId_cancel"
+								class="btn btn-warning">Annulla</button>
+							<button type="submit" name="_eventId_back"
+								class="btn btn-warning">Modifica Iscrizione</button>
+							<button type="button" class="btn btn-success"
+								onclick="jQuery('#ecommercePayPal').submit();">Pagamento</button>
+						</div>
+					</div>
+				</div>
+
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Codice Uisp</th>
+							<th>Data di Nascita</th>
+							<th>Cognome</th>
+							<th>Nome</th>
+							<th>Prezzo (€)</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>${registration.total}</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<c:forEach items="${registration.selected}" var="view"
+							varStatus="status">
+							<tr>
+								<td>${view.uispCode}</td>
+								<td><fmt:formatDate pattern="dd/MM/yyyy"
+										value="${view.birthDate.time}" /></td>
+								<td>${view.surname}</td>
+								<td>${view.name}</td>
+								<td>${registration.price}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</form:form>
+
+		</div>
+
+		<div class="col-lg-12">
+			<form method="post" action="${paypalInfo.actionUrl}"
+				id="ecommercePayPal" target="_top">
+				<input type="hidden" name="button" value="${paypalInfo.button}" />
+				<input type="hidden" name="business" value="${paypalInfo.business}" />
+				<input type="hidden" name="item_name" value="${paypalInfo.itemName}" />
+				<input type="hidden" name="item_number"
+					value="${paypalInfo.itemNumber}" /> <input type="hidden"
+					name="quantity" value="${paypalInfo.quantity}" /> <input
+					type="hidden" name="amount" value="${paypalInfo.amount}" /> <input
+					type="hidden" name="currency_code"
+					value="${paypalInfo.currencyCode}" /> <input type="hidden"
+					name="shipping" value="${paypalInfo.shipping}" /> <input
+					type="hidden" name="tax" value="${paypalInfo.tax}" /> <input
+					type="hidden" name="custom" value="${paypalInfo.custom}" /> <input
+					type="hidden" name="return" value="${paypalInfo.returnVal}" /> <input
+					type="hidden" name="cancel_return"
+					value="${paypalInfo.cancelReturn}" /> <input type="hidden"
+					name="env" value="${paypalInfo.env}" /> <input type="hidden"
+					name="cmd" value="${paypalInfo.cmd}" /> <input type="hidden"
+					name="bn" value="${paypalInfo.bn}" />
+			</form>
+		</div>
+	</div>
+
+</div>
+

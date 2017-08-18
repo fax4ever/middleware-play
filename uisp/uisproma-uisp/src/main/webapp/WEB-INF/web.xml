@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>uisproma-uisp</display-name>
+	<context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <filter>
+    	<filter-name>MyFacesExtensionsFilter</filter-name>
+    	<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
+    	<init-param>
+	        <description>
+	            Set the size limit for uploaded files.
+	                Format: 10  - 10 bytes
+	                        10k - 10 KB
+	                        10m - 10 MB
+	                        1g  - 1 GB
+	        </description>
+	        <param-name>uploadMaxFileSize</param-name>
+	        <param-value>100m</param-value>
+    	</init-param>
+    	<init-param>
+	        <description>
+	            Set the threshold size - files below this limit are stored 
+	            in memory, files above this limit are stored on disk.
+	                Format: 10  - 10 bytes
+	                        10k - 10 KB
+	                        10m - 10 MB
+	                        1g  - 1 GB
+	        </description>
+	        <param-name>uploadThresholdSize</param-name>
+	        <param-value>100m</param-value>
+	    </init-param>
+	    <init-param>
+	        <description>
+	            Set the path where the intermediary files will be stored.
+	        </description>
+	        <param-name>uploadRepositoryPath</param-name>
+	        <param-value>/temp</param-value>
+	    </init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>MyFacesExtensionsFilter</filter-name>
+    	<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+    <welcome-file-list>
+    	<welcome-file>faces/login.xhtml</welcome-file>
+    </welcome-file-list>
+    
+    <security-constraint>
+    	<web-resource-collection>
+    		<web-resource-name>fpages</web-resource-name>
+    		<url-pattern>/faces/pages/*</url-pattern>
+    	</web-resource-collection>
+    	<web-resource-collection>
+    		<web-resource-name>pages</web-resource-name>
+    		<url-pattern>/pages/*</url-pattern>
+    	</web-resource-collection>
+    	<auth-constraint>
+    		<role-name>ADMINISTRATOR</role-name>
+    		<role-name>CURATOR</role-name>
+    	</auth-constraint>
+    	<user-data-constraint>
+        	<transport-guarantee>NONE</transport-guarantee>
+    	</user-data-constraint>
+    </security-constraint>
+    <login-config>
+	    <auth-method>FORM</auth-method>
+	    <realm-name>security</realm-name>
+	    <form-login-config>
+	        <form-login-page>/faces/login.xhtml</form-login-page>
+	        <form-error-page>/faces/error.xhtml</form-error-page>
+	    </form-login-config>
+	</login-config>
+	
+	<security-role>
+		<role-name>ADMINISTRATOR</role-name>
+	</security-role>
+	<security-role>
+		<role-name>CURATOR</role-name>
+	</security-role>
+	
+</web-app>

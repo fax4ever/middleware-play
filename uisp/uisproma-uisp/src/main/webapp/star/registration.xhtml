@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Registrazione
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="middlebox">
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Accesso</f:facet>
+
+				<h:outputLabel value="Username" for="user" />
+				<h:inputText id="user" value="#{attachePresenter.view.attache.user.username}" validator="#{user.alredyInUse}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputText>
+				<h:message for="user" styleClass="messages" />
+
+				<h:outputLabel value="Password" for="password" />
+				<h:inputSecret id="password" value="#{attachePresenter.view.attache.user.password}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputSecret>
+				<h:message for="password" styleClass="messages"></h:message>
+
+				<h:outputLabel value="Conferma Password" for="confirm" />
+				<h:inputSecret id="confirm" value="#{attachePresenter.view.confirmPassword}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputSecret>
+				<h:message for="confirm" styleClass="messages"></h:message>
+
+				<h:outputLabel value="Società Sportiva" for="club" />
+				<h:selectOneMenu id="club" value="#{attachePresenter.club}" required="true" styleClass="select">
+					<f:selectItems value="#{attachePresenter.clubs}" />
+				</h:selectOneMenu>
+				<h:message for="club" styleClass="messages" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Dati Personali</f:facet>
+
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText id="name" value="#{attachePresenter.view.attache.name}" required="true" />
+				<h:message for="name" styleClass="messages" />
+
+				<h:outputLabel value="Cognome" for="surname" />
+				<h:inputText id="surname" value="#{attachePresenter.view.attache.surname}" required="true" />
+				<h:message for="surname" styleClass="messages" />
+
+				<h:outputLabel value="Codice Fiscale" for="taxCode" />
+				<h:inputText id="taxCode" value="#{attachePresenter.view.attache.taxCode}" required="true" />
+				<h:message for="taxCode" styleClass="messages" />
+
+				<h:outputLabel value="Data di Nascita" for="birthDate" />
+				<h:inputText id="birthDate" value="#{attachePresenter.view.attache.birthDate}" styleClass="date" required="true" converter="calendar" />
+				<h:message for="birthDate" styleClass="messages" />
+
+				<h:outputLabel value="Luogo di Nascita" for="hometown" />
+				<h:inputText id="hometown" value="#{attachePresenter.view.attache.hometown}" required="true" />
+				<h:message for="hometown" styleClass="messages" />
+
+				<h:outputLabel value="Email" for="email" />
+				<h:inputText id="email" value="#{attachePresenter.view.attache.email}" required="true" validatorMessage="#{msg.email}">
+					 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</h:inputText>
+				<h:message for="email" styleClass="messages" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Indirizzo</f:facet>
+
+				<h:outputLabel value="Via" for="street" />
+				<h:inputText id="street" value="#{attachePresenter.view.attache.address.street}" required="true" />
+				<h:message for="street" styleClass="messages" />
+
+				<h:outputLabel value="Città" for="city" />
+				<h:inputText id="city" value="#{attachePresenter.view.attache.address.city}" required="true"/>
+				<h:message for="city" styleClass="messages" />
+
+				<h:outputLabel value="Stato" for="state" />
+				<h:inputText id="state" value="#{attachePresenter.view.attache.address.state}" required="true"/>
+				<h:message for="state" styleClass="messages" />
+
+				<h:outputLabel value="CAP" for="zip" />
+				<h:inputText id="zip" value="#{attachePresenter.view.attache.address.zip}" required="true" />
+				<h:message for="zip" styleClass="messages" />
+			</h:panelGrid>
+
+			<div class="ui-widget ui-state-default ui-corner-all menu">
+				<h:commandButton value="Conferma" action="#{attachePresenter.register}" styleClass="button">
+					<f:ajax immediate="false" execute="@all" render="@all" />
+				</h:commandButton>
+			</div>
+			
+			<h:messages globalOnly="true" id="messages" styleClass="messages"></h:messages>
+		</div>
+	</ui:define>
+
+</ui:composition>

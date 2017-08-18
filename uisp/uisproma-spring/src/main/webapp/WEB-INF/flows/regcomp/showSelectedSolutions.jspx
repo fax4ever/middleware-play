@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<div id="selectedSolutions" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:fmt="http://java.sun.com/jsp/jstl/fmt" xmlns:form="http://www.springframework.org/tags/form" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<div class="row">
+		<div class="col-lg-12">
+			<form:form id="selectSolutionsForm" action="${flowExecutionUrl}" modelAttribute="registration">
+			
+				<div class="row">
+					<div class="col-lg-6">
+						<p class="lead"><strong>Completa l'iscrizione</strong></p>
+						<p>Scegli una soluzione per ciascuno di loro.</p>
+					</div>
+					<div class="col-lg-6">
+						<div class="btn-group">
+							<button type="submit" name="_eventId_cancel" class="btn btn-success">
+								Annulla
+							</button>
+							<button type="submit" name="_eventId_back" class="btn btn-success">
+								Indietro
+							</button>
+							<button type="submit" name="_eventId_next" class="btn btn-warning">
+								Registra Partepazioni
+							</button>
+						</div>
+					</div>
+				</div>
+				
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Codice Uisp</th>
+							<th>Data di Nascita</th>
+							<th>Cognome</th>
+							<th>Nome</th>
+							<th>Soluzione</th>
+							<th>Prezzo (€)</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>${registration.total}</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<c:forEach items="${registration.selViews}" var="view" varStatus="status">
+							<tr>
+								<td>${view.entity.athlete.uispCode}</td>
+								<td><fmt:formatDate pattern="dd/MM/yyyy" value="${view.entity.athlete.birthDate.time}" /></td>
+								<td>${view.entity.athlete.surname}</td>
+								<td>${view.entity.athlete.name}</td>
+								<td>
+									<form:select path="selViews[${status.index}].solutionId">
+										<form:options items="${competition.solutions}" itemValue="id" itemLabel="name" />
+									</form:select>
+								</td>
+								<td>${view.entity.solution.price}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</form:form>
+		</div>
+	</div>
+
+</div>
+

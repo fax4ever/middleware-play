@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Back Office Menu
+	</ui:define>
+
+	<ui:define name="content">
+		<h:panelGrid columns="4" styleClass="mainmenu">
+
+			<h:link outcome="pages/userhome.xhtml">
+				<div>
+					<h:graphicImage library="images" name="sports/volleyball.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Utenti</div>
+				<div class="number">#{homePresenter.user}</div>
+			</h:link>
+			
+			<h:link outcome="pages/curatorhome.xhtml">
+				<div>
+					<h:graphicImage library="images" name="sports/basketball.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Curatori</div>
+				<div class="number">#{homePresenter.curator}</div>
+			</h:link>
+			
+			<h:link outcome="pages/attachehome">
+				<div>
+					<h:graphicImage library="images" name="sports/tennis.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Addetti</div>
+				<div class="number">#{homePresenter.attache}</div>
+			</h:link>
+			
+			<h:link outcome="pages/athletehome">
+				<div>
+					<h:graphicImage library="images" name="sports/soccer.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Atleti</div>
+				<div class="number">#{homePresenter.athlete}</div>
+			</h:link>
+			
+			<h:link outcome="pages/sporthome.xhtml">
+				<div>
+					<h:graphicImage library="images" name="sports/baseball.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Discipline Sportive</div>
+				<div class="number">#{homePresenter.sport}</div>
+			</h:link>
+			
+			<h:link outcome="pages/clubhome.xhtml">
+				<div>
+					<h:graphicImage library="images" name="sports/golf.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Società Sportive</div>
+				<div class="number">#{homePresenter.club}</div>
+			</h:link>
+			
+			<h:link outcome="pages/champhome.xhtml">
+				<div>
+					<h:graphicImage library="images" name="sports/cup.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Campionati</div>
+				<div class="number">#{homePresenter.champ}</div>
+			</h:link>
+			
+			<h:link outcome="pages/comphome">
+				<div>
+					<h:graphicImage library="images" name="sports/gymnastics.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Gare Singole</div>
+				<div class="number">#{homePresenter.comp}</div>
+			</h:link>
+			
+			<h:link outcome="pages/notimplement">
+				<div>
+					<h:graphicImage library="images" name="sports/boxing.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="error">Pagamenti Online</div>
+				<div class="number">#{homePresenter.times}</div>
+			</h:link>
+			
+			<h:link outcome="pages/notimplement">
+				<div>
+					<h:graphicImage library="images" name="sports/hockey.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="error">Pagamenti Manuali</div>
+				<div class="number">#{homePresenter.times}</div>
+			</h:link>
+			
+			<h:link outcome="pages/champattendancehome">
+				<div>
+					<h:graphicImage library="images" name="sports/compass.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Partecipazioni <br /> ai Campionati</div>
+				<div class="number">#{homePresenter.att}</div>
+			</h:link>
+			
+			<h:link outcome="pages/compattendancehome">
+				<div>
+					<h:graphicImage library="images" name="sports/football.png" alt="Campionati" height="128px" />
+				</div>
+				<div class="title">Partecipazioni <br /> alle Gare Singole</div>
+				<div class="number">#{homePresenter.coAtt}</div>
+			</h:link>
+			
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>

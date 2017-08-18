@@ -1,0 +1,216 @@
+@CHARSET "US-ASCII";
+
+body {
+	font: normal small/1.4em 'century gothic', Verdana, sans-serif;
+	background-color: #0C6E2B;
+}
+
+.mainTitle {
+	font-size: 1.5em;
+	vertical-align: 200%;
+	color: #777;
+}
+
+.messages {
+	color: #0C6E2B;
+}
+
+div#container {
+	width: 1080px;
+	margin: 0px auto;
+	text-align: left;
+	background-color: white;
+	border-radius: 15px;
+}
+
+div#container>form>div {
+	width: 984px;
+	margin: 0px auto;
+}
+
+div#content {
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+
+div#footer {
+	border-top: 1px solid #0C6E2B;
+	padding-bottom: 30px;
+}
+
+input[type="submit"] {
+	color: #0C6E2B;
+	border: 1px solid #0C6E2B;
+	background-color: #B3B3B3;
+	font: bold normal small/1.4em "Trebuchet MS", Helvetica, Jamrul,
+		sans-serif;
+	cursor: pointer;
+}
+
+input[type="submit"]:HOVER {
+	background-color: white;
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+	color: #0C6E2B
+}
+
+a:HOVER {
+	color: #B3B3B3;
+}
+
+a:HOVER>div.title {
+	color: #B3B3B3;
+}
+
+a>div {
+	text-align: center;
+}
+
+label {
+	color: #3E634A;
+	font-weight: bold;
+	font: italic bold normal small/1.4em Verdana, sans-serif;
+}
+
+textarea {
+	width: 300px;
+	height: 150px;
+	font: normal small/1.4em 'century gothic', Verdana, sans-serif;
+}
+
+textarea.mini {
+	width: 200px;
+	height: 100px;
+	font: normal small/1.4em 'century gothic', Verdana, sans-serif;
+}
+
+#container input {
+	font: normal small/1.4em 'century gothic', Verdana, sans-serif;
+}
+
+#ciao {
+	position: fixed;
+	background-color: white;
+	top: 163px;
+	right: 300px;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+	margin-top: 30px;
+}
+
+.clear {
+	clear: both;
+}
+
+.loggeduser {
+	font-size: 0.9em;
+	padding: 3px;
+	color: #777;
+}
+
+.menu {
+	padding: 10px;
+}
+
+.loginbox {
+	width: 380px;
+}
+
+.loginbox table {
+	width: 380px;
+	margin-bottom: 10px;
+}
+
+.insidebox {
+	width: 500px;
+}
+
+.insidebox table {
+	width: 500px;
+	margin-bottom: 10px;
+}
+
+.middlebox {
+	width: 700px;
+}
+
+.middlebox table {
+	width: 700px;
+	margin-bottom: 10px;
+}
+
+.box {
+	width: 100%;
+}
+
+.box > table {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.number {
+	position: relative;
+	top: -53px;
+	left: 90px;
+	width: 50px;
+	background-color: #B3B3B3;
+	color: white;
+}
+
+.title {
+	font-weight: bolder;
+}
+
+.mainmenu td {
+	padding: 5px 30px;
+}
+
+.error {
+	font-weight: bolder;
+	color: #A10C15;
+}
+
+input[type="text"],input[type="password"] {
+	width: 200px;
+}
+
+table.tank>tbody>tr>td {
+	vertical-align: top;
+}
+
+input[type="text"].amount {
+	width: 50px;
+}
+
+input[type="text"].date {
+	width: 70px;
+}
+
+input[type="text"].mini {
+	width: 100px;
+}
+
+input[type="text"].micro {
+	width: 30px;
+}
+
+.select {
+	width: 350px;
+}
+
+.middleselect {
+	width: 257px;
+}
+
+.miniselect {
+	width: 100px;
+}

@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Login
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="loginbox">
+		
+			<h:panelGrid columns="3" title="Credenziali" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Credenziali</f:facet>
+	
+				<h:outputLabel for="username">Username:</h:outputLabel>
+				<h:inputText id="username" value="#{userView.user.username}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputText>
+				<h:message id="name" for="username" styleClass="messages"></h:message>
+	
+				<h:outputLabel for="password">Password:</h:outputLabel>
+				<h:inputSecret id="password" value="#{userView.user.password}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputSecret>
+				<h:message id="pass" for="password" styleClass="messages"></h:message>
+	
+			</h:panelGrid>
+			
+			<div class="ui-widget ui-state-default ui-corner-all menu">
+				<h:commandLink action="${loginPresenter.login}" value="Accedi" styleClass="button">
+					<f:ajax immediate="false" execute="username password" render="messages name pass" />
+				</h:commandLink>
+				
+				<h:commandLink action="star/registration" value="Registrati" styleClass="button">
+					<f:ajax immediate="true"></f:ajax>
+				</h:commandLink>
+			</div>
+	
+			<h:messages globalOnly="true" id="messages" styleClass="messages"></h:messages>
+		
+		</div>
+	</ui:define>
+
+</ui:composition>

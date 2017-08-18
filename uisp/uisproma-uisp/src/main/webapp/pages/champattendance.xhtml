@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{champattendance.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:link value="Partecipazioni" outcome="champattendancehome" />
+		<h:commandButton value="#{champattendance.actionName}" action="#{champattendance.save}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Applica" action="#{champattendance.apply}" type="submit">
+			<f:ajax execute="@all" render="@all" />
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{champattendance.delete}" style="display:none" immediate="true"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{champattendance.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{champattendance.load}" />
+		</f:metadata>
+		
+		<h:message globalOnly="true" id="messages" styleClass="messages" />
+
+		<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+			
+			<h:outputLabel value="Codice" for="code" />
+			<h:outputText id="code" value="#{champattendance.code}" />
+			<h:message for="code" styleClass="messages" />
+			
+			<h:outputLabel value="Società Sportiva" for="club" />
+			<h:selectOneMenu id="club" value="#{champattendance.club}" required="true" styleClass="select spartaco" onchange="SportRoma.resetSelect('attache'); SportRoma.resetSelect('athlete');">
+				<f:selectItems value="#{champattendance.clubs}" />
+				<f:ajax render="attache athlete" />
+			</h:selectOneMenu>
+			<h:message for="club" styleClass="messages" />
+			
+			<h:outputLabel value="Addeto" for="attache" />
+			<h:selectOneMenu id="attache" value="#{champattendance.attache}" required="true" styleClass="select" disabled="#{champattendance.club == null}" >
+				<f:selectItems value="#{champattendance.attaches}" />
+			</h:selectOneMenu>
+			<h:message for="attache" styleClass="messages" />
+			
+			<h:outputLabel value="Atleta" for="athlete" />
+			<h:selectOneMenu id="athlete" value="#{champattendance.athlete}" required="true" styleClass="select" disabled="#{champattendance.club == null}" >
+				<f:selectItems value="#{champattendance.athletes}" />
+			</h:selectOneMenu>
+			<h:message for="athlete" styleClass="messages" />
+			
+			<h:outputLabel value="Campionato" for="competition" />
+			<h:selectOneMenu id="championship" value="#{champattendance.champ}" required="true" styleClass="select">
+				<f:selectItems value="#{champattendance.champs}" />
+			</h:selectOneMenu>
+			<h:message for="championship" styleClass="messages" />
+
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

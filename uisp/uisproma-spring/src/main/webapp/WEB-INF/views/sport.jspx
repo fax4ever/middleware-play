@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" 
+	xmlns:c="http://java.sun.com/jsp/jstl/core" 
+	xmlns:spring="http://www.springframework.org/tags" 
+	xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+	xmlns:form="http://www.springframework.org/tags/form">
+	
+	<div class="row">
+		<div class="col-lg-4">
+			<p class="lead"><strong>${sport.name}</strong></p>
+		</div>
+		<div class="col-lg-8">
+			<p class="img-thumbnail marghe">${sport.description}</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+		
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Inzio</th>
+						<th>Fine</th>
+						<th>Prezzo</th>
+						<th>Stagione</th>
+						<th>Indirizzo</th>
+						<th>Comune</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${events}" var="event">
+						<c:choose>
+					     	<c:when test="${event.class.simpleName eq 'Competition'}">
+					      		<c:set var="eventType" value="comps" />
+					    	</c:when>
+						    <c:otherwise>
+						      	<c:set var="eventType" value="champs" />
+						    </c:otherwise>
+						</c:choose>
+					
+						<spring:url value="/app/${eventType}/${event.id}" var="eventUrl" />
+						<tr>
+							<td><a href="${eventUrl}">${event.name}</a></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${event.start.time}" /></td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${event.end.time}" /></td>
+							<td>${event.price}</td>
+							<td>${event.season}</td>
+							<td>${event.address.street}</td>
+							<td>${event.address.city}</td>
+						</tr>
+					</c:forEach>	
+				</tbody>
+			</table>
+			
+		</div>
+	</div>
+
+</div>

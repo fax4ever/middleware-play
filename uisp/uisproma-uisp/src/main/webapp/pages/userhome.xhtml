@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		Utenti
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Menu" action="/menu" />
+		<h:commandButton value="Nuovo" action="user" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:dataTable value="${userHome.users}" var="use" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellspacing="0" cellpadding="7">
+			<f:facet name="header">Utenti</f:facet>
+
+			<h:column>
+				<f:facet name="header">Username</f:facet>
+				#{use.username}
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Ruolo</f:facet>
+				#{use.roles}
+			</h:column>
+
+			<h:column>
+				<h:link value="Modifica" outcome="user" styleClass="button">
+					<f:param name="name" value="#{use.username}" />
+				</h:link>
+			</h:column>
+
+		</h:dataTable>
+	</ui:define>
+
+</ui:composition>

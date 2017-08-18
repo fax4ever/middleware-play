@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<definition extends="default" name="free/pay">
+		<put-attribute name="body" value="/WEB-INF/views/empty.jspx" />
+	</definition>
+	<definition extends="default" name="user">
+		<put-attribute name="body" value="/WEB-INF/views/user.jspx" />
+	</definition>
+	<definition extends="one" name="login">
+		<put-attribute name="body" value="/WEB-INF/views/login.jspx" />
+	</definition>	
+	<definition extends="default" name="home">
+		<put-attribute name="body" value="/WEB-INF/views/home.jspx" />
+	</definition>
+	<definition extends="default" name="sport">
+		<put-attribute name="body" value="/WEB-INF/views/sport.jspx" />
+	</definition>
+	<definition extends="default" name="champ">
+		<put-attribute name="body" value="/WEB-INF/views/champ.jspx" />
+	</definition>
+	<definition extends="default" name="comp">
+		<put-attribute name="body" value="/WEB-INF/views/comp.jspx" />
+	</definition>
+	<definition extends="default" name="commandPass">
+		<put-attribute name="body" value="/WEB-INF/views/commandPass.jspx" />
+	</definition>
+</tiles-definitions>

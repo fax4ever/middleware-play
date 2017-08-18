@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+      
+      <composite:interface componentType="rendezvous">
+      	<composite:attribute name="value" type="java.util.Calendar" shortDescription="The selected time." />
+      </composite:interface>
+      
+      <composite:implementation>
+        <span id="#{cc.clientId}">
+        	<h:inputText binding="#{cc.day}" maxlength="2" styleClass="date" />
+			-
+            <h:inputText binding="#{cc.hour}" maxlength="2" styleClass="micro" />
+            :
+            <h:inputText binding="#{cc.minute}" maxlength="2" styleClass="micro" />
+        </span>
+      </composite:implementation>
+      
+</html>

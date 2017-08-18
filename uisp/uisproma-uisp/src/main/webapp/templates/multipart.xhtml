@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+          
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputScript library="javax.faces" name="jsf.js" />
+	<h:outputScript library="js" name="jquery-1.8.2.min.js"></h:outputScript>
+	<h:outputScript library="js" name="jquery-ui-1.9.1.custom.min.js"></h:outputScript>
+	<h:outputScript library="js" name="chosen.jquery.min.js"></h:outputScript>
+	<h:outputScript library="js" name="sportroma.js" target="head"></h:outputScript>
+	<h:outputStylesheet library="css" name="main.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css" name="chosen.css"></h:outputStylesheet>
+	<h:outputStylesheet library="css/custom-theme" name="jquery-ui-1.9.1.custom.min.css"></h:outputStylesheet>
+	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/favicon.ico"/>
+	<title>UISP Roma - <ui:insert name="title"></ui:insert></title>
+</h:head>
+
+<h:body>
+	
+	<div id="container">
+		<h:form prependId="false" enctype="multipart/form-data">
+		
+			<div id="header">
+				<ui:insert name="header">
+		    		<ui:include src="header.xhtml"/>
+				</ui:insert>
+			</div>
+			
+			<div id="toolbar" class="ui-widget-header ui-corner-all">
+				<ui:insert name="menu">
+				</ui:insert>
+			</div>
+		
+			<div id="content">
+				<ui:insert name="content">
+				</ui:insert>
+			</div>
+		
+			<div id="footer">
+				<ui:insert name="footer">
+					<ui:include src="footer.xhtml"/>
+				</ui:insert>
+			</div>
+	
+		</h:form>
+	</div>
+	
+	<div id="dialog">
+		<p>Sei sicuro di cancellare l'elemento?</p>
+	</div>
+
+</h:body>
+
+</html>

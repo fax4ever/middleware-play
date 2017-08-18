@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{attache.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Elenco Addetti Società" immediate="true" action="attachehome"></h:commandButton>
+		<h:commandButton value="#{attache.actionName}" action="#{attache.save}" type="submit" styleClass="ciao">
+			<f:ajax render="@all" execute="@all"></f:ajax>
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{attache.delete}" style="display:none"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{attache.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{attache.load}" />
+		</f:metadata>
+		
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<div class="middlebox">
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Accesso</f:facet>
+				
+				<h:outputLabel value="Codice" for="code" />
+				<h:outputText id="code" value="#{attache.code}" />
+				<h:message for="code" styleClass="messages" />
+
+				<h:outputLabel value="Username" for="formal" rendered="#{attache.mode == 'CREATE'}" />
+				<h:inputText id="formal" value="#{attache.entity.user.username}" rendered="#{attache.mode == 'CREATE'}" validator="#{user.alredyInUse}">
+					<f:validateLength minimum="3" />
+				</h:inputText>
+				<h:message for="formal" styleClass="messages" rendered="#{attache.mode == 'CREATE'}" />
+
+				<h:outputLabel value="Username" for="username" rendered="#{attache.mode == 'UPDATE'}" />
+				<h:outputText id="username" value="#{attache.entity.user.username}" rendered="#{attache.mode == 'UPDATE'}" />
+				<h:message for="username" styleClass="messages" rendered="#{attache.mode == 'UPDATE'}" />
+
+				<h:outputLabel value="Password" for="password" />
+				<h:inputSecret id="password" value="#{attache.entity.user.password}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputSecret>
+				<h:message for="password" styleClass="messages"></h:message>
+
+				<h:outputLabel value="Conferma Password" for="confirm" />
+				<h:inputSecret id="confirm" value="#{attache.confirmPassword}" required="true">
+					<f:validateLength minimum="3" />
+				</h:inputSecret>
+				<h:message for="confirm" styleClass="messages"></h:message>
+
+				<h:outputLabel value="Società Sportiva" for="club" />
+				<h:selectOneMenu id="club" value="#{attache.club}" required="true" styleClass="select" data-placeholder="Choose a country..." >
+					<f:selectItems value="#{attache.clubs}" />
+				</h:selectOneMenu>
+				<h:message for="club" styleClass="messages" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Dati Personali</f:facet>
+
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText id="name" value="#{attache.entity.name}" required="true" />
+				<h:message for="name" styleClass="messages" />
+
+				<h:outputLabel value="Cognome" for="surname" />
+				<h:inputText id="surname" value="#{attache.entity.surname}" required="true" />
+				<h:message for="surname" styleClass="messages" />
+
+				<h:outputLabel value="Codice Fiscale" for="taxCode" />
+				<h:inputText id="taxCode" value="#{attache.entity.taxCode}" required="true" />
+				<h:message for="taxCode" styleClass="messages" />
+
+				<h:outputLabel value="Data di Nascita" for="birthDate" />
+				<h:inputText id="birthDate" value="#{attache.entity.birthDate}" styleClass="date" required="true" converter="calendar" />
+				<h:message for="birthDate" styleClass="messages" />
+
+				<h:outputLabel value="Luogo di Nascita" for="hometown" />
+				<h:inputText id="hometown" value="#{attache.entity.hometown}" required="true" />
+				<h:message for="hometown" styleClass="messages" />
+
+				<h:outputLabel value="Email" for="email" />
+				<h:inputText id="email" value="#{attache.entity.email}" required="true" validatorMessage="#{msg.email}">
+					 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</h:inputText>
+				<h:message for="email" styleClass="messages" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Indirizzo</f:facet>
+
+				<h:outputLabel value="Via" for="street" />
+				<h:inputText id="street" value="#{attache.entity.address.street}" required="true" />
+				<h:message for="street" styleClass="messages" />
+
+				<h:outputLabel value="Città" for="city" />
+				<h:inputText id="city" value="#{attache.entity.address.city}" required="true"/>
+				<h:message for="city" styleClass="messages" />
+
+				<h:outputLabel value="Stato" for="state" />
+				<h:inputText id="state" value="#{attache.entity.address.state}" required="true"/>
+				<h:message for="state" styleClass="messages" />
+
+				<h:outputLabel value="CAP" for="zip" />
+				<h:inputText id="zip" value="#{attache.entity.address.zip}" required="true" />
+				<h:message for="zip" styleClass="messages" />
+			</h:panelGrid>
+			
+		</div>
+
+	</ui:define>
+
+</ui:composition>

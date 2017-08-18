@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{athlete.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Atleti" immediate="true" action="athletehome"></h:commandButton>
+		<h:commandButton value="Importa" immediate="true" action="athleteimport" />
+		<h:commandButton value="#{athlete.actionName}" action="#{athlete.save}" type="submit">
+			<f:ajax render="@all" execute="@all"></f:ajax>
+		</h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{athlete.delete}" style="display:none" immediate="true"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{athlete.entity.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{athlete.load}" />
+		</f:metadata>
+
+		<div class="middlebox">
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Accesso</f:facet>
+				
+				<h:outputLabel value="Codice" for="code" />
+				<h:outputText id="code" value="#{athlete.code}" />
+				<h:message for="code" styleClass="messages" />
+				
+				<h:outputLabel value="Numero Tessera" for="formal" rendered="#{athlete.mode == 'CREATE'}" />
+				<h:inputText id="formal" value="#{athlete.entity.uispCode}" rendered="#{athlete.mode == 'CREATE'}" validator="#{athlete.alredyInUse}" />
+				<h:message for="formal" styleClass="messages" rendered="#{athlete.mode == 'CREATE'}" />
+
+				<h:outputLabel value="Numero Tessera" for="uispcode" rendered="#{athlete.mode == 'UPDATE'}" />
+				<h:outputText id="uispcode" value="#{athlete.entity.uispCode}" rendered="#{athlete.mode == 'UPDATE'}" />
+				<h:message for="uispcode" styleClass="messages" rendered="#{athlete.mode == 'UPDATE'}" />
+				
+				<h:outputLabel value="Società Sportiva" for="club" />
+				<h:selectOneMenu id="club" value="#{athlete.club}" required="true" styleClass="select">
+					<f:selectItems value="#{athlete.clubs}" />
+				</h:selectOneMenu>
+				<h:message for="club" styleClass="messages" />
+				
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Dati Personali</f:facet>
+
+				<h:outputLabel value="Nome" for="name" />
+				<h:inputText id="name" value="#{athlete.entity.name}" required="true" />
+				<h:message for="name" styleClass="messages" />
+
+				<h:outputLabel value="Cognome" for="surname" />
+				<h:inputText id="surname" value="#{athlete.entity.surname}" required="true" />
+				<h:message for="surname" styleClass="messages" />
+
+				<h:outputLabel value="Codice Fiscale" for="taxCode" />
+				<h:inputText id="taxCode" value="#{athlete.entity.taxCode}" required="true" />
+				<h:message for="taxCode" styleClass="messages" />
+
+				<h:outputLabel value="Data di Nascita" for="birthDate" />
+				<h:inputText id="birthDate" value="#{athlete.entity.birthDate}" styleClass="date" required="true" converter="calendar" />
+				<h:message for="birthDate" styleClass="messages" />
+
+				<h:outputLabel value="Luogo di Nascita" for="hometown" />
+				<h:inputText id="hometown" value="#{athlete.entity.hometown}" required="true" />
+				<h:message for="hometown" styleClass="messages" />
+
+				<h:outputLabel value="Email" for="email" />
+				<h:inputText id="email" value="#{athlete.entity.email}" validatorMessage="#{msg.email}">
+					 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</h:inputText>
+				<h:message for="email" styleClass="messages" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+				<f:facet name="header">Indirizzo</f:facet>
+
+				<h:outputLabel value="Via" for="street" />
+				<h:inputText id="street" value="#{athlete.entity.address.street}" required="true" />
+				<h:message for="street" styleClass="messages" />
+
+				<h:outputLabel value="Città" for="city" />
+				<h:inputText id="city" value="#{athlete.entity.address.city}" required="true"/>
+				<h:message for="city" styleClass="messages" />
+
+				<h:outputLabel value="Stato" for="state" />
+				<h:inputText id="state" value="#{athlete.entity.address.state}" />
+				<h:message for="state" styleClass="messages" />
+
+				<h:outputLabel value="CAP" for="zip" />
+				<h:inputText id="zip" value="#{athlete.entity.address.zip}" required="true" />
+				<h:message for="zip" styleClass="messages" />
+			</h:panelGrid>
+			
+			<h:messages globalOnly="true" id="messages" styleClass="messages"></h:messages>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

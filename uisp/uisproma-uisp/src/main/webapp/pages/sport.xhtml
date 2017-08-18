@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:fn="http://java.sun.com/jsp/jstl/functions" template="/templates/layout.xhtml">
+
+	<ui:define name="title">
+		#{sportView.title}
+	</ui:define>
+
+	<ui:define name="menu">
+		<h:commandButton value="Indietro" immediate="true" action="sporthome"></h:commandButton>
+		<h:commandButton value="#{sportView.actionName}" action="#{sportPresenter.save}" type="submit"></h:commandButton>
+		<h:commandButton value="Elimina" styleClass="dialog_link" immediate="true"></h:commandButton>
+		<h:commandButton value="Hidden" styleClass="delete" action="#{sportPresenter.delete}" style="display:none"></h:commandButton>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{sportView.sport.id}">
+				<f:converter converterId="javax.faces.Long" />
+			</f:viewParam>
+			<f:event type="preRenderView" listener="#{sportPresenter.load}" />
+		</f:metadata>
+		
+		<h:messages globalOnly="true" id="messages" styleClass="messages" />
+
+		<h:panelGrid columns="2" styleClass="jtable ui-widget ui-state-default ui-corner-all" cellpadding="7" cellspacing="0">
+			<f:facet name="header">#{sportView.title}</f:facet>
+		
+			<h:outputLabel value="Codice" for="code" />
+			<h:outputText id="code" value="#{sportView.code}" />
+
+			<h:outputLabel value="Nome" for="name" />
+			<h:inputText id="name" value="#{sportView.sport.name}" />
+
+			<h:outputLabel value="Descrizione" for="description" />
+			<h:inputTextarea id="description" value="#{sportView.sport.description}" />
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

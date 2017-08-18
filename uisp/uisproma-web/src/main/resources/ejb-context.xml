@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+	<jee:local-slsb id="athleteService" jndi-name="java:app/uisproma-ejb/AthleteService!com.whiterational.uisproma.business.service.UispAthleteService" 
+	business-interface="com.whiterational.uisproma.business.service.UispAthleteService" />
+	
+	<jee:local-slsb id="attacheService" jndi-name="java:app/uisproma-ejb/AttacheService!com.whiterational.uisproma.business.service.UispAttacheService" 
+	business-interface="com.whiterational.uisproma.business.service.UispAttacheService" />
+	
+	<jee:local-slsb id="championshipAttendanceService" jndi-name="java:app/uisproma-ejb/ChampionshipAttendanceService!com.whiterational.uisproma.business.service.UispChampionshipAttendanceService" 
+	business-interface="com.whiterational.uisproma.business.service.UispChampionshipAttendanceService" />
+	
+	<jee:local-slsb id="championshipService" jndi-name="java:app/uisproma-ejb/ChampionshipService!com.whiterational.uisproma.business.service.UispChampionshipService" 
+	business-interface="com.whiterational.uisproma.business.service.UispChampionshipService" />
+	
+	<jee:local-slsb id="clubService" jndi-name="java:app/uisproma-ejb/ClubService!com.whiterational.uisproma.business.service.UispClubService" 
+	business-interface="com.whiterational.uisproma.business.service.UispClubService" />
+	
+	<jee:local-slsb id="competitionAttendanceService" jndi-name="java:app/uisproma-ejb/CompetitionAttendanceService!com.whiterational.uisproma.business.service.UispCompetitionAttendanceService" 
+	business-interface="com.whiterational.uisproma.business.service.UispCompetitionAttendanceService" />
+	
+	<jee:local-slsb id="competitionService" jndi-name="java:app/uisproma-ejb/CompetitionService!com.whiterational.uisproma.business.service.UispCompetitionService" 
+	business-interface="com.whiterational.uisproma.business.service.UispCompetitionService" />
+	
+	<jee:local-slsb id="curatorService" jndi-name="java:app/uisproma-ejb/CuratorService!com.whiterational.uisproma.business.service.UispCuratorService" 
+	business-interface="com.whiterational.uisproma.business.service.UispCuratorService" />
+	
+	<jee:local-slsb id="roleService" jndi-name="java:app/uisproma-ejb/RoleService!com.whiterational.uisproma.business.service.UispRoleService" 
+	business-interface="com.whiterational.uisproma.business.service.UispRoleService" />
+	
+	<jee:local-slsb id="sportService" jndi-name="java:app/uisproma-ejb/SportService!com.whiterational.uisproma.business.service.UispSportService" 
+	business-interface="com.whiterational.uisproma.business.service.UispSportService" />
+	
+	<jee:local-slsb id="userService" jndi-name="java:app/uisproma-ejb/UserService!com.whiterational.uisproma.business.service.UispUserService" 
+	business-interface="com.whiterational.uisproma.business.service.UispUserService" />
+	
+	<jee:local-slsb id="eventService" jndi-name="java:app/uisproma-ejb/EventService!com.whiterational.uisproma.business.service.UispEventService" 
+	business-interface="com.whiterational.uisproma.business.service.UispEventService" />
+
+</beans>
