@@ -1,19 +1,17 @@
 package com.whiterational.uisproma.business.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import javax.inject.Inject;
-
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.whiterational.uisproma.business.entity.User;
 import com.whiterational.uisproma.business.exception.ConfirmPasswordNotMatch;
 import com.whiterational.uisproma.business.exception.OldPasswordNotMatch;
 import com.whiterational.uisproma.business.exception.PasswordException;
 import com.whiterational.uisproma.business.security.Md5Helper;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.*;
 
 public class UispUserServiceTest extends UispServiceTest {
 	
@@ -21,7 +19,7 @@ public class UispUserServiceTest extends UispServiceTest {
 	
 	@Inject
 	private UispUserService target;
-	
+
 	@Test
 	public void test() {
 		User read = target.read("mario");

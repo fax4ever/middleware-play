@@ -8,13 +8,4 @@
 		<property name="databaseName" value="target/databases/derby" />
 		<property name="createDatabase" value="create" />
 	</jdbc-connection-pool>
-	<jdbc-resource pool-name="PhantomPool" jndi-name="jdbc/phantom"></jdbc-resource>
-	<jdbc-connection-pool name="PhantomPool" res-type="javax.sql.DataSource" datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" is-isolation-level-guaranteed="false">
-		<property name="portNumber" value="3306"></property>
-		<property name="databaseName" value="phantom"></property>
-		<property name="user" value="root"></property>
-		<property name="password" value="f739"></property>
-		<property name="serverName" value="localhost"></property>
-		<property name="createDatabase" value="create" />
-	</jdbc-connection-pool>
 </resources>
