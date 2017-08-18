@@ -20,7 +20,6 @@ import org.slf4j.Logger;
  * Created by fabio.ercoli@redhat.com on 24/04/17.
  */
 @Path("register")
-@Produces(MediaType.APPLICATION_JSON)
 public class RegisterRestService {
 
     public static final int SIZE_DEF_VALUE = 10000;

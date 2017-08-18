@@ -21,6 +21,7 @@ package it.redhat.demo.rest.mapper;
 
 import javax.ejb.EJBException;
 import javax.inject.Inject;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -38,7 +39,10 @@ public class EJBExceptionMapper implements ExceptionMapper<EJBException> {
         Throwable cause = exception.getCause();
         log.error(exception.getMessage(), exception);
 
-        return Response.serverError().entity(new Error(cause)).build();
+        return Response.serverError()
+                .entity(new Error(cause))
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
 
 }
