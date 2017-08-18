@@ -16,35 +16,67 @@
 
 package it.redhat.demo.service;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 import it.redhat.demo.entity.Car;
 
 @Stateless
-@TransactionManagement( TransactionManagementType.CONTAINER )
+@TransactionManagement( TransactionManagementType.BEAN )
 public class CarService {
 
     @Inject
     private EntityManager em;
 
-    public String saveCar(String frame, String plate) {
+    @Inject
+    private UserTransaction ut;
 
-        Car car = new Car();
-        car.setFrameNumber(frame);
-        car.setLicencePlate(plate);
+    public String saveCar(String frame, String plate, String description) {
 
-        em.persist(car);
-        return car.getId();
+        try {
+
+            ut.begin();
+
+            Car car = new Car();
+            car.setFrameNumber(frame);
+            car.setLicencePlate(plate);
+            car.setDescription(description);
+
+            em.persist(car);
+
+            ut.commit();
+
+            return car.getId();
+
+        } catch (Exception ex) {
+
+            try {
+                ut.rollback();
+            } catch (SystemException e) {
+                throw new RuntimeException(e);
+            }
+
+            return null;
+
+        }
 
     }
 
     public Car getCar(String id) {
 
         return em.find(Car.class, id);
+
+    }
+
+    public List<Car> getCars() {
+
+        return em.createQuery("select c from Car c", Car.class).getResultList();
 
     }
 

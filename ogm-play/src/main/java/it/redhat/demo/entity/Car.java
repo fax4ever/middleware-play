@@ -16,14 +16,21 @@
 
 package it.redhat.demo.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 @Entity
+@Indexed
 public class Car {
 
     @Id
@@ -36,6 +43,12 @@ public class Car {
 
     @Column(name = "frame")
     private String frameNumber;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateInsert = new Date();
+
+    @Field(analyze= Analyze.NO)
+    private String description;
 
     public String getId() {
         return id;
@@ -59,6 +72,22 @@ public class Car {
 
     public void setFrameNumber(String frameNumber) {
         this.frameNumber = frameNumber;
+    }
+
+    public Date getDateInsert() {
+        return dateInsert;
+    }
+
+    public void setDateInsert(Date dateInsert) {
+        this.dateInsert = dateInsert;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

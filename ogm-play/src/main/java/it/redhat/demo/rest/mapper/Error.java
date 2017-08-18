@@ -19,26 +19,24 @@
  */
 package it.redhat.demo.rest.mapper;
 
-import javax.ejb.EJBException;
-import javax.inject.Inject;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+public class Error {
 
-import org.slf4j.Logger;
+    private final String exception;
+    private final String message;
 
-@Provider
-public class EJBExceptionMapper implements ExceptionMapper<EJBException> {
+    public Error(Throwable ex) {
 
-    @Inject
-    private Logger log;
+        this.exception = ex.getClass().getName();
+        this.message = ex.getMessage();
 
-    @Override
-    public Response toResponse(EJBException exception) {
-        Throwable cause = exception.getCause();
-        log.error(exception.getMessage(), exception);
+    }
 
-        return Response.serverError().entity(new Error(cause)).build();
+    public String getException() {
+        return exception;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
 }

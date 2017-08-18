@@ -24,6 +24,7 @@
       <property name="jboss.as.jpa.providerModule" value="org.hibernate:5.1"/>
       <property name="hibernate.ogm.datastore.provider" value="infinispan_remote" />
       <property name="hibernate.ogm.infinispan_remote.configuration_resource_name" value="hotrodclient.properties" />
+      <property name="wildfly.jpa.hibernate.search.module" value="org.hibernate.search.orm:5.6.2.Final-orm51" />
     </properties>
   </persistence-unit>
 </persistence>
