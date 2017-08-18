@@ -16,14 +16,10 @@
 
 package it.redhat.demo.play;
 
-import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.inject.Inject;
 
-import it.redhat.demo.entity.Car;
-import it.redhat.demo.service.CarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,24 +29,13 @@ public class Start {
 
     private static final Logger LOG = LoggerFactory.getLogger(Start.class);
 
-    @Inject
-    private CarService service;
+
 
     @PostConstruct
     public void init() {
         LOG.info("Start");
 
-        Car car = new Car();
-        String id = UUID.randomUUID().toString();
-        car.setId(id);
-        car.setFrameNumber("2989398h3i3");
-        car.setLicencePlate("DX339XC");
 
-        service.saveCar(car);
-
-        Car loadCar = service.getCar(id);
-
-        LOG.info("car load: {}", loadCar);
 
     }
 

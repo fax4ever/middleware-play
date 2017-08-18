@@ -14,38 +14,31 @@
  * limitations under the License.
 */
 
-package it.redhat.demo.service;
+/**
+ * Created by fabio on 18/08/2017.
+ */
+package it.redhat.demo.rest.mapper;
 
-import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import javax.ejb.EJBException;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
-import it.redhat.demo.entity.Car;
+import org.slf4j.Logger;
 
-@Stateless
-@TransactionManagement( TransactionManagementType.CONTAINER )
-public class CarService {
+@Provider
+public class EJBExceptionMapper implements ExceptionMapper<EJBException> {
 
     @Inject
-    private EntityManager em;
+    private Logger log;
 
-    public String saveCar(String frame, String plate) {
+    @Override
+    public Response toResponse(EJBException exception) {
+        Throwable cause = exception.getCause();
+        log.error(exception.getMessage(), exception);
 
-        Car car = new Car();
-        car.setFrameNumber(frame);
-        car.setLicencePlate(plate);
-
-        em.persist(car);
-        return car.getId();
-
-    }
-
-    public Car getCar(String id) {
-
-        return em.find(Car.class, id);
-
+        return Response.serverError().entity(cause.getMessage()).build();
     }
 
 }

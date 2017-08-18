@@ -41,6 +41,8 @@
     <hibernate.search.version>5.6.2.Final-orm51</hibernate.search.version>
     <infinispan.version>8.2.6.Final</infinispan.version>
 
+    <version.org.jboss.spec.jboss.javaee.7>1.0.3.Final</version.org.jboss.spec.jboss.javaee.7>
+
   </properties>
 
   <dependencyManagement>
@@ -62,6 +64,14 @@
         <type>pom</type>
         <scope>import</scope>
         <version>${wildfly-javaee7.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.spec</groupId>
+        <artifactId>jboss-javaee-7.0</artifactId>
+        <version>${version.org.jboss.spec.jboss.javaee.7}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -124,14 +134,26 @@
     </dependency>
 
     <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.jboss.spec.javax.ejb</groupId>
       <artifactId>jboss-ejb-api_3.2_spec</artifactId>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
-      <groupId>javax.enterprise</groupId>
-      <artifactId>cdi-api</artifactId>
+      <groupId>org.jboss.spec.javax.transaction</groupId>
+      <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.spec.javax.ws.rs</groupId>
+      <artifactId>jboss-jaxrs-api_2.0_spec</artifactId>
       <scope>provided</scope>
     </dependency>
 
