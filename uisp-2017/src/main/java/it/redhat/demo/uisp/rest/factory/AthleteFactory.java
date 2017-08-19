@@ -17,7 +17,7 @@
 /**
  * Created by fabio on 18/08/2017.
  */
-package it.redhat.demo.uisp.entity.factory;
+package it.redhat.demo.uisp.rest.factory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,9 +25,13 @@ import java.util.Calendar;
 import it.redhat.demo.uisp.entity.Address;
 import it.redhat.demo.uisp.entity.Athlete;
 
-public class AtheteFactory {
+/**
+ * Simple helper class to build a massive number of Athletes
+ * For test purpose only
+ */
+public class AthleteFactory {
 
-    public ArrayList<Athlete> buildAthletes(Integer size) {
+    public static ArrayList<Athlete> buildAthletes(Integer size) {
 
         ArrayList<Athlete> athletes = new ArrayList<>();
         for (int i=0; i<size; i++) {
@@ -38,7 +42,7 @@ public class AtheteFactory {
 
     }
 
-    public Athlete buildAthlete(int index) {
+    public static Athlete buildAthlete(int index) {
 
         String code = String.format("%09d", index);
 

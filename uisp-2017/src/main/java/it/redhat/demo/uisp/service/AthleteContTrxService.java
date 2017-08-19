@@ -27,54 +27,34 @@ import javax.persistence.EntityManager;
 import it.redhat.demo.uisp.entity.Athlete;
 
 @Stateless
-public class AthleteService {
+public class AthleteContTrxService {
 
     @Inject
     private EntityManager em;
 
-    @Inject
-    private RegisterService registerService;
-
     public List<Athlete> findAll() {
 
-        return em.createQuery("select a from Athlete a",
-                              Athlete.class).getResultList();
-    }
-
-    public void deleteAll() {
-
-        // command are not yet implemented
-        //em.createQuery("delete from Athlete").executeUpdate();
-
-        List<Athlete> athletes = findAll();
-        registerService.deleteAthletesChunked(athletes);
+        return em.createQuery("select a from Athlete a", Athlete.class).getResultList();
     }
 
     public List<Athlete> findBySurname(String surname) {
 
-        return em.createQuery("select a from Athlete a where surname = :surname",
-                              Athlete.class)
-                .setParameter("surname",
-                              surname).getResultList();
+        return em.createQuery("select a from Athlete a where surname = :surname", Athlete.class)
+                .setParameter("surname", surname).getResultList();
     }
 
     public List<Athlete> findByUispCode(String uispCode) {
 
-        return em.createQuery("select a from Athlete a where uispCode = :uispCode",
-                              Athlete.class)
-                .setParameter("uispCode",
-                              uispCode).getResultList();
+        return em.createQuery("select a from Athlete a where uispCode = :uispCode", Athlete.class)
+                .setParameter("uispCode", uispCode).getResultList();
     }
 
-    public List<Athlete> findByUispcodeAndSurname(String uispCode,
-                                                  String surname) {
+    public List<Athlete> findByUispcodeAndSurname(String uispCode, String surname) {
 
         return em.createQuery("select a from Athlete a where uispCode = :uispCode and surname = :surname",
                               Athlete.class)
-                .setParameter("uispCode",
-                              uispCode)
-                .setParameter("surname",
-                              surname)
+                .setParameter("uispCode", uispCode)
+                .setParameter("surname", surname)
                 .getResultList();
     }
 
@@ -98,4 +78,5 @@ public class AthleteService {
             return findAll();
         }
     }
+
 }

@@ -12,32 +12,33 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import it.redhat.demo.uisp.entity.Athlete;
-import it.redhat.demo.uisp.entity.factory.AtheteFactory;
+import it.redhat.demo.uisp.rest.factory.AthleteFactory;
 import it.redhat.demo.uisp.service.AthleteBeanParams;
-import it.redhat.demo.uisp.service.AthleteService;
-import it.redhat.demo.uisp.service.RegisterService;
+import it.redhat.demo.uisp.service.AthleteContTrxService;
+import it.redhat.demo.uisp.service.AthleteBeanTrxService;
 import org.slf4j.Logger;
 
 /**
  * Created by fabio.ercoli@redhat.com on 24/04/17.
  */
-@Path("register")
-public class RegisterRestService {
+@Path("athletes")
+public class AthleteRestService {
 
     public static final int SIZE_DEF_VALUE = 10000;
+
     @Inject
     private Logger log;
 
     @Inject
-    private RegisterService registerService;
+    private AthleteBeanTrxService beanTrxService;
 
     @Inject
-    private AthleteService athleteService;
+    private AthleteContTrxService contTrxService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Athlete> findAll(@BeanParam AthleteBeanParams params) {
-        return athleteService.findByParams(params);
+    public List<Athlete> findByParams(@BeanParam AthleteBeanParams params) {
+        return contTrxService.findByParams(params);
     }
 
     @Path("batch/{size}")
@@ -48,14 +49,16 @@ public class RegisterRestService {
             size = SIZE_DEF_VALUE;
         }
 
-        registerService.insertAthletesChunked(new AtheteFactory().buildAthletes(size));
+        beanTrxService.insertAthletesChunked(AthleteFactory.buildAthletes(size));
 
     }
 
     @DELETE
     public void deleteAll() {
 
-        athleteService.deleteAll();
+        List<Athlete> allDetachedAthletes = contTrxService.findAll();
+        beanTrxService.deleteAthletesChunked(allDetachedAthletes);
+
 
     }
 
@@ -63,7 +66,7 @@ public class RegisterRestService {
     @Path("uispCode/{uispCode}")
     public void deleteByUispCode(@PathParam("uispCode") String uispCode) {
 
-        athleteService.deleteByUispCode(uispCode);
+        contTrxService.deleteByUispCode(uispCode);
 
     }
 

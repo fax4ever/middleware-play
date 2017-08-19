@@ -36,7 +36,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class RegisterService {
+public class AthleteBeanTrxService {
 
     public static final int CHUNK_SIZE = 50;
 
