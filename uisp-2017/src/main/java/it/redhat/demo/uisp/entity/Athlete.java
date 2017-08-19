@@ -24,6 +24,8 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 @Entity
@@ -35,6 +37,7 @@ public class Athlete extends Person {
 
     @Column(unique = true, nullable = false)
     @Pattern(regexp = "\\d{9}")
+    @Field(analyze= Analyze.NO)
     private String uispCode;
 
     public String getUispCode() {

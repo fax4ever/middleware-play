@@ -32,19 +32,70 @@ public class AthleteService {
     @Inject
     private EntityManager em;
 
+    @Inject
+    private RegisterService registerService;
+
     public List<Athlete> findAll() {
 
-        return em.createQuery("select a from Athlete a", Athlete.class).getResultList();
-
+        return em.createQuery("select a from Athlete a",
+                              Athlete.class).getResultList();
     }
 
     public void deleteAll() {
 
-
-
         // command are not yet implemented
-        em.createQuery("delete from Athlete").executeUpdate();
+        //em.createQuery("delete from Athlete").executeUpdate();
 
+        List<Athlete> athletes = findAll();
+        registerService.deleteAthletesChunked(athletes);
     }
 
+    public List<Athlete> findBySurname(String surname) {
+
+        return em.createQuery("select a from Athlete a where surname = :surname",
+                              Athlete.class)
+                .setParameter("surname",
+                              surname).getResultList();
+    }
+
+    public List<Athlete> findByUispCode(String uispCode) {
+
+        return em.createQuery("select a from Athlete a where uispCode = :uispCode",
+                              Athlete.class)
+                .setParameter("uispCode",
+                              uispCode).getResultList();
+    }
+
+    public List<Athlete> findByUispcodeAndSurname(String uispCode,
+                                                  String surname) {
+
+        return em.createQuery("select a from Athlete a where uispCode = :uispCode and surname = :surname",
+                              Athlete.class)
+                .setParameter("uispCode",
+                              uispCode)
+                .setParameter("surname",
+                              surname)
+                .getResultList();
+    }
+
+    public void deleteByUispCode(String uispCode) {
+
+        findByUispCode(uispCode)
+                .stream()
+                .forEach(athlete -> em.remove(athlete));
+    }
+
+    public List<Athlete> findByParams(AthleteBeanParams params) {
+
+        if (params.getSurname() != null && params.getUispCode() != null) {
+            return findByUispcodeAndSurname(params.getUispCode(),
+                                            params.getSurname());
+        } else if (params.getSurname() != null) {
+            return findBySurname(params.getSurname());
+        } else if (params.getUispCode() != null) {
+            return findByUispCode(params.getUispCode());
+        } else {
+            return findAll();
+        }
+    }
 }

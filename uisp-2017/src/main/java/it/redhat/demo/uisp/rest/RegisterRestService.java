@@ -2,6 +2,7 @@ package it.redhat.demo.uisp.rest;
 
 import java.util.List;
 import javax.inject.Inject;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import it.redhat.demo.uisp.entity.Athlete;
 import it.redhat.demo.uisp.entity.factory.AtheteFactory;
+import it.redhat.demo.uisp.service.AthleteBeanParams;
 import it.redhat.demo.uisp.service.AthleteService;
 import it.redhat.demo.uisp.service.RegisterService;
 import org.slf4j.Logger;
@@ -34,8 +36,8 @@ public class RegisterRestService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Athlete> findAll() {
-        return athleteService.findAll();
+    public List<Athlete> findAll(@BeanParam AthleteBeanParams params) {
+        return athleteService.findByParams(params);
     }
 
     @Path("batch/{size}")
@@ -54,6 +56,14 @@ public class RegisterRestService {
     public void deleteAll() {
 
         athleteService.deleteAll();
+
+    }
+
+    @DELETE
+    @Path("uispCode/{uispCode}")
+    public void deleteByUispCode(@PathParam("uispCode") String uispCode) {
+
+        athleteService.deleteByUispCode(uispCode);
 
     }
 

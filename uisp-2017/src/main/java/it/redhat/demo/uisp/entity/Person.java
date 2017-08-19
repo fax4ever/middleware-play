@@ -30,6 +30,8 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.validator.constraints.Email;
 
 @MappedSuperclass
@@ -41,7 +43,10 @@ public abstract class Person {
     private String id;
 
     private String name;
+
+    @Field(analyze= Analyze.NO)
     private String surname;
+
     private String taxCode;
     private String hometown;
 

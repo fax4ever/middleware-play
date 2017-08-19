@@ -30,6 +30,7 @@ import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import it.redhat.demo.uisp.entity.Athlete;
+import org.slf4j.Logger;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -40,10 +41,24 @@ public class RegisterService {
     public static final int CHUNK_SIZE = 50;
 
     @Inject
+    private Logger log;
+
+    @Inject
     private EntityManager em;
 
     @Inject
     private UserTransaction ut;
+
+    public void deleteAthletesChunked(List<Athlete> athletes) {
+
+        log.info("deleting {} athletes", athletes.size());
+        AtomicInteger counter = new AtomicInteger();
+
+        athletes.stream()
+                .collect(groupingBy(x->counter.getAndIncrement()/ CHUNK_SIZE))
+                .values().forEach(group -> this.deleteAthletes(group));
+
+    }
 
     public void insertAthletesChunked(List<Athlete> athletes) {
 
@@ -64,6 +79,36 @@ public class RegisterService {
 
             for (Athlete athlete : athletes) {
                 em.persist(athlete);
+            }
+
+            ut.commit();
+
+            // clear caches
+            em.clear();
+
+        } catch (Exception ex) {
+
+            try {
+                ut.rollback();
+            } catch (SystemException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+    public void deleteAthletes(List<Athlete> athletes) {
+
+        log.info("deleting (on single transactional chunk) {} athletes", athletes.size());
+
+        try {
+
+            ut.begin();
+            em.joinTransaction();
+
+            for (Athlete athlete : athletes) {
+                athlete = em.merge(athlete);
+                em.remove(athlete);
             }
 
             ut.commit();
