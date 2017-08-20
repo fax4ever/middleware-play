@@ -123,6 +123,13 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-jpa</artifactId>
+      <version>${wildfly-javaee7.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Log -->
     <dependency>
       <groupId>org.slf4j</groupId>

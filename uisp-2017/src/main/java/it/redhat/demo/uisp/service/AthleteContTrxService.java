@@ -32,9 +32,10 @@ public class AthleteContTrxService {
     @Inject
     private EntityManager em;
 
-    public List<Athlete> findAll() {
+    public List<Athlete> getBulk() {
 
         return em.createQuery("select a from Athlete a", Athlete.class).getResultList();
+
     }
 
     public List<Athlete> findBySurname(String surname) {
@@ -75,7 +76,7 @@ public class AthleteContTrxService {
         } else if (params.getUispCode() != null) {
             return findByUispCode(params.getUispCode());
         } else {
-            return findAll();
+            return getBulk();
         }
     }
 

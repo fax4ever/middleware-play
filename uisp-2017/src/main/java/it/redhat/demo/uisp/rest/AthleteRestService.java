@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import it.redhat.demo.uisp.entity.Athlete;
-import it.redhat.demo.uisp.rest.factory.AthleteFactory;
+import it.redhat.demo.uisp.rest.factory.EntityFactory;
 import it.redhat.demo.uisp.service.AthleteBeanParams;
 import it.redhat.demo.uisp.service.AthleteContTrxService;
 import it.redhat.demo.uisp.service.AthleteBeanTrxService;
@@ -41,29 +41,30 @@ public class AthleteRestService {
         return contTrxService.findByParams(params);
     }
 
-    @Path("batch/{size}")
+    @Path("bulk/{size}")
     @POST
-    public void batchInsert(@PathParam("size") Integer size) {
+    public void bulkInsert(@PathParam("size") Integer size) {
 
         if (size == null) {
             size = SIZE_DEF_VALUE;
         }
 
-        beanTrxService.insertAthletesChunked(AthleteFactory.buildAthletes(size));
+        beanTrxService.insertAthletesChunked(EntityFactory.buildAthletes(size));
 
     }
 
+    @Path("bulk")
     @DELETE
-    public void deleteAll() {
+    public void bulkDelete() {
 
-        List<Athlete> allDetachedAthletes = contTrxService.findAll();
+        List<Athlete> allDetachedAthletes = contTrxService.getBulk();
         beanTrxService.deleteAthletesChunked(allDetachedAthletes);
 
 
     }
 
-    @DELETE
     @Path("uispCode/{uispCode}")
+    @DELETE
     public void deleteByUispCode(@PathParam("uispCode") String uispCode) {
 
         contTrxService.deleteByUispCode(uispCode);

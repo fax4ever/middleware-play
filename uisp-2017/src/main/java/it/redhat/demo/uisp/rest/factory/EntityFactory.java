@@ -24,12 +24,13 @@ import java.util.Calendar;
 
 import it.redhat.demo.uisp.entity.Address;
 import it.redhat.demo.uisp.entity.Athlete;
+import it.redhat.demo.uisp.entity.SportClub;
 
 /**
  * Simple helper class to build a massive number of Athletes
  * For test purpose only
  */
-public class AthleteFactory {
+public class EntityFactory {
 
     public static ArrayList<Athlete> buildAthletes(Integer size) {
 
@@ -66,6 +67,32 @@ public class AthleteFactory {
         athlete.setAddress(address);
 
         return athlete;
+
+    }
+
+    public static ArrayList<SportClub> buildClubs(Integer size) {
+
+        ArrayList<SportClub> clubs = new ArrayList<>();
+        for (int i=0; i<size; i++) {
+            clubs.add(buildClub(i+1));
+        }
+
+        return clubs;
+
+    }
+
+    public static SportClub buildClub(int index) {
+
+        String code = String.format("%09d", index);
+
+        SportClub sportClub = new SportClub();
+
+        sportClub.setTaxCode("TAX::"+index);
+        sportClub.setCode(code);
+        sportClub.setName("NAME::"+index);
+        sportClub.setVatNumber("VAT::"+index);
+
+        return sportClub;
 
     }
 

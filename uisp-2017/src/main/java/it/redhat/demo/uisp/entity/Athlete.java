@@ -21,6 +21,7 @@ package it.redhat.demo.uisp.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -40,12 +41,23 @@ public class Athlete extends Person {
     @Field(analyze= Analyze.NO)
     private String uispCode;
 
+    @ManyToOne
+    private SportClub club;
+
     public String getUispCode() {
         return uispCode;
     }
 
     public void setUispCode(String uispCode) {
         this.uispCode = uispCode;
+    }
+
+    public SportClub getClub() {
+        return club;
+    }
+
+    public void setClub(SportClub club) {
+        this.club = club;
     }
 
     @Override
