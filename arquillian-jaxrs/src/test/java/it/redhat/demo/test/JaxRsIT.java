@@ -1,5 +1,8 @@
 package it.redhat.demo.test;
 
+import java.net.URL;
+import javax.ws.rs.client.ClientBuilder;
+
 import it.redhat.demo.rest.RestConfig;
 import it.redhat.demo.rest.RestService;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -13,19 +16,16 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.client.ClientBuilder;
-import java.net.URL;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by fabio.ercoli@redhat.com on 24/04/17.
  */
 
 @RunWith(Arquillian.class)
-public class JaxRsTest {
+public class JaxRsIT {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JaxRsTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JaxRsIT.class);
 
     @Deployment
     public static WebArchive createDeployment() {

@@ -25,9 +25,9 @@ import static org.junit.Assert.assertNotNull;
  * Created by fabio.ercoli@redhat.com on 24/04/17.
  */
 @RunWith(Arquillian.class)
-public class JpaTest {
+public class JpaIT {
 
-    private static final Logger LOG = LoggerFactory.getLogger(JpaTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JpaIT.class);
 
     @Deployment
     public static WebArchive create() {

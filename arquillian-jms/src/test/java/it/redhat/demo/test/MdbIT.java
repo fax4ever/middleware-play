@@ -1,5 +1,13 @@
 package it.redhat.demo.test;
 
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.jms.JMSContext;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
+import javax.jms.Queue;
+import javax.jms.TextMessage;
+
 import it.redhat.demo.exception.WrongMessageType;
 import it.redhat.demo.mdb.MessageMdb;
 import it.redhat.demo.producer.LogProducer;
@@ -12,10 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
-import javax.jms.*;
-
 import static org.junit.Assert.*;
 
 /**
@@ -23,7 +27,7 @@ import static org.junit.Assert.*;
  */
 
 @RunWith(Arquillian.class)
-public class MdbTest {
+public class MdbIT {
 
     public static final int TIMEOUT = 10000;
 
