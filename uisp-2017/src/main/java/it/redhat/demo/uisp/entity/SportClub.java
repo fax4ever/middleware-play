@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -57,9 +58,13 @@ public class SportClub {
     @Field(analyze= Analyze.NO)
     private String vatNumber;
 
-    @OneToMany(mappedBy = "club")
+    @OneToMany(mappedBy = "club", fetch = FetchType.EAGER)
     @XmlTransient
     private List<Athlete> athletes = new ArrayList<>();
+
+    public void add(Athlete athlete) {
+        this.athletes.add(athlete);
+    }
 
     public String getId() {
         return id;

@@ -19,6 +19,7 @@
  */
 package it.redhat.demo.uisp.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -41,7 +42,7 @@ public class Athlete extends Person {
     @Field(analyze= Analyze.NO)
     private String uispCode;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private SportClub club;
 
     public String getUispCode() {

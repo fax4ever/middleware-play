@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import it.redhat.demo.uisp.entity.Athlete;
-import it.redhat.demo.uisp.rest.factory.EntityFactory;
+import it.redhat.demo.uisp.factory.ObjectHelper;
 import it.redhat.demo.uisp.service.AthleteBeanParams;
 import it.redhat.demo.uisp.service.AthleteBeanTrxService;
 import it.redhat.demo.uisp.service.AthleteContTrxService;
@@ -51,7 +51,7 @@ public class AthleteRestService {
             size = SIZE_DEF_VALUE;
         }
 
-        beanTrxService.insertAthletesChunked(EntityFactory.buildAthletes(size));
+        beanTrxService.insertAthletesChunked(ObjectHelper.buildAthletes(size));
 
     }
 

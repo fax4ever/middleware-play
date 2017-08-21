@@ -1,5 +1,8 @@
 package it.redhat.demo.test;
 
+import java.util.Date;
+import javax.inject.Inject;
+
 import it.redhat.demo.entity.PersonEntity;
 import it.redhat.demo.producer.ResourcesProducer;
 import it.redhat.demo.stateless.PersonStateless;
@@ -13,21 +16,14 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import java.util.Date;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by fabio.ercoli@redhat.com on 24/04/17.
  */
 @RunWith(Arquillian.class)
 public class JpaIT {
-
-    private static final Logger LOG = LoggerFactory.getLogger(JpaIT.class);
 
     @Deployment
     public static WebArchive create() {

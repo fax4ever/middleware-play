@@ -46,4 +46,10 @@ public class ClubContTrxService {
 
     }
 
+    public void saveAll(List<SportClub> clubs) {
+
+        clubs.stream().forEach(club -> em.persist(club));
+
+    }
+
 }

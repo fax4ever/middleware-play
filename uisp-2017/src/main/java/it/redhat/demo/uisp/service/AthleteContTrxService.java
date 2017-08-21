@@ -26,7 +26,7 @@ import javax.persistence.EntityManager;
 
 import it.redhat.demo.uisp.entity.Athlete;
 import it.redhat.demo.uisp.entity.SportClub;
-import it.redhat.demo.uisp.rest.factory.EntityFactory;
+import it.redhat.demo.uisp.factory.ObjectHelper;
 import it.redhat.demo.uisp.service.exception.UispNotFoundException;
 
 @Stateless
@@ -96,8 +96,8 @@ public class AthleteContTrxService {
                 .getResultList();
         sportClubs.stream().forEach(sportClub -> em.remove(sportClub));
 
-        Athlete athlete = EntityFactory.buildAthlete(1);
-        SportClub sportClub = EntityFactory.buildClub(1);
+        Athlete athlete = ObjectHelper.buildAthlete(1);
+        SportClub sportClub = ObjectHelper.buildClub(1);
 
         em.persist(sportClub);
         em.persist(athlete);
@@ -123,9 +123,7 @@ public class AthleteContTrxService {
         SportClub sportClub = sportClubs.get(0);
 
         athlete.setClub(sportClub);
-        sportClub.getAthletes().add(athlete);
-
-        //em.merge(athlete);
+        sportClub.add(athlete);
 
     }
 
@@ -139,14 +137,26 @@ public class AthleteContTrxService {
                 .getResultList();
         sportClubs.stream().forEach(sportClub -> em.remove(sportClub));
 
-        Athlete athlete = EntityFactory.buildAthlete(1);
-        SportClub sportClub = EntityFactory.buildClub(1);
+        Athlete athlete = ObjectHelper.buildAthlete(1);
+        SportClub sportClub = ObjectHelper.buildClub(1);
 
         athlete.setClub(sportClub);
-        sportClub.getAthletes().add(athlete);
+        sportClub.add(athlete);
 
         em.persist(sportClub);
         em.persist(athlete);
+
+    }
+
+    public void update(Athlete athlete) {
+
+        em.merge(athlete);
+
+    }
+
+    public void saveAll(List<Athlete> athletes) {
+
+        athletes.stream().forEach(athlete -> em.persist(athlete));
 
     }
 

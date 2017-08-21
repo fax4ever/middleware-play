@@ -67,7 +67,7 @@
       <!-- used for all other JEE frameworks version -->
       <dependency>
         <groupId>org.wildfly.bom</groupId>
-        <artifactId>wildfly-javaee7</artifactId>
+        <artifactId>wildfly-javaee7-with-tools</artifactId>
         <type>pom</type>
         <scope>import</scope>
         <version>${wildfly-javaee7.version}</version>
@@ -91,6 +91,7 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -123,19 +124,38 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.wildfly</groupId>
-      <artifactId>wildfly-jpa</artifactId>
-      <version>${wildfly-javaee7.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- Log -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <scope>provided</scope>
     </dependency>
+
+    <!-- Test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.wildfly.arquillian</groupId>
+      <artifactId>wildfly-arquillian-container-managed</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
 </project>

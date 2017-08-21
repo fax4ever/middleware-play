@@ -158,6 +158,7 @@ public class AthleteBeanTrxService {
             SportClub sportClub = sportClubs.get(0);
 
             athlete.setClub(sportClub);
+            sportClub.add(athlete);
 
             ut.commit();
 

@@ -17,7 +17,7 @@
 /**
  * Created by fabio on 18/08/2017.
  */
-package it.redhat.demo.uisp.rest.factory;
+package it.redhat.demo.uisp.factory;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +30,7 @@ import it.redhat.demo.uisp.entity.SportClub;
  * Simple helper class to build a massive number of Athletes
  * For test purpose only
  */
-public class EntityFactory {
+public class ObjectHelper {
 
     public static ArrayList<Athlete> buildAthletes(Integer size) {
 

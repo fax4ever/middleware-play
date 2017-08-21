@@ -31,7 +31,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import it.redhat.demo.uisp.entity.SportClub;
-import it.redhat.demo.uisp.rest.factory.EntityFactory;
+import it.redhat.demo.uisp.factory.ObjectHelper;
 import it.redhat.demo.uisp.service.ClubBeanTrxService;
 import it.redhat.demo.uisp.service.ClubContTrxService;
 import org.slf4j.Logger;
@@ -64,7 +64,7 @@ public class ClubRestService {
             size = SIZE_DEF_VALUE;
         }
 
-        beanTrxService.insertClubsChunked(EntityFactory.buildClubs(size));
+        beanTrxService.insertClubsChunked(ObjectHelper.buildClubs(size));
 
     }
 
@@ -72,8 +72,8 @@ public class ClubRestService {
     @DELETE
     public void bulkDelete() {
 
-        List<SportClub> allDetachedAthletes = contTrxService.getBulk();
-        beanTrxService.deleteClubsChunked(allDetachedAthletes);
+        List<SportClub> allDetachedClubs = contTrxService.getBulk();
+        beanTrxService.deleteClubsChunked(allDetachedClubs);
 
 
     }
