@@ -77,7 +77,7 @@ public class AthleteRestService {
     @PUT
     public void associateClub(@PathParam("uispCode") String uispCode, @PathParam("clubCode") String clubCode) throws UispNotFoundException {
 
-        beanTrxService.associate(uispCode, clubCode);
+        contTrxService.associate(uispCode, clubCode);
 
     }
 
@@ -90,7 +90,7 @@ public class AthleteRestService {
     }
 
     @Path("associate")
-    @POST
+    @PUT
     public void associate() throws UispNotFoundException {
 
         contTrxService.associate("000000001", "000000001");
