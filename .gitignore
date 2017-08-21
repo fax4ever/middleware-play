@@ -35,3 +35,5 @@ activemq-data
 *.epoch
 *.log
 *.tlog
+
+it.redhat.demo.uisp.entity.*
