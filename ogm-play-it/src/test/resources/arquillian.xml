@@ -17,13 +17,6 @@
     <property name="executionType">REMOTE</property>
   </defaultProtocol>
 
-  <!--<container qualifier="jboss" default="true">
-    <configuration>
-      <property name="jbossHome">${jboss.home}</property>
-      <property name="javaVmArguments">-XX:MaxPermSize=512m -Djava.net.preferIPv4Stack=true -XX:+IgnoreUnrecognizedVMOptions</property>
-    </configuration>
-  </container>-->
-
   <group qualifier="hotrod-client-server" default="true">
     <container qualifier="jboss" default="true">
       <configuration>
