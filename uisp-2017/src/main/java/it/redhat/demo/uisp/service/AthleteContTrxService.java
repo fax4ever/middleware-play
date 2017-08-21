@@ -123,6 +123,8 @@ public class AthleteContTrxService {
         SportClub sportClub = sportClubs.get(0);
 
         athlete.setClub(sportClub);
+        sportClub.getAthletes().add(athlete);
+
         //em.merge(athlete);
 
     }
@@ -139,7 +141,9 @@ public class AthleteContTrxService {
 
         Athlete athlete = EntityFactory.buildAthlete(1);
         SportClub sportClub = EntityFactory.buildClub(1);
+
         athlete.setClub(sportClub);
+        sportClub.getAthletes().add(athlete);
 
         em.persist(sportClub);
         em.persist(athlete);
