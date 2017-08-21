@@ -25,12 +25,17 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import it.redhat.demo.uisp.entity.Athlete;
+import it.redhat.demo.uisp.entity.SportClub;
+import it.redhat.demo.uisp.service.exception.UispNotFoundException;
 
 @Stateless
 public class AthleteContTrxService {
 
     @Inject
     private EntityManager em;
+
+    @Inject
+    private ClubContTrxService clubService;
 
     public List<Athlete> getBulk() {
 
@@ -78,6 +83,29 @@ public class AthleteContTrxService {
         } else {
             return getBulk();
         }
+    }
+
+    public void associate(String athleteUispCode, String clubCode) throws UispNotFoundException {
+
+        List<Athlete> athleteList = findByUispCode(athleteUispCode);
+        if (athleteList.isEmpty()) {
+            throw new UispNotFoundException("Athlete " + athleteUispCode + " not found");
+        }
+
+        List<SportClub> sportClubs = em.createQuery("select a from SportClub a where code = :code", SportClub.class)
+                .setParameter("code", clubCode)
+                .getResultList();
+
+        if (sportClubs.isEmpty()) {
+            throw new UispNotFoundException("Club " + clubCode + " not found");
+        }
+
+        Athlete athlete = athleteList.get(0);
+        SportClub sportClub = sportClubs.get(0);
+
+        athlete.setClub(sportClub);
+        //em.merge(athlete);
+
     }
 
 }

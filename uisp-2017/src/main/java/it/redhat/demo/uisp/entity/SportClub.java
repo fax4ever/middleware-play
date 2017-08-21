@@ -21,13 +21,12 @@ package it.redhat.demo.uisp.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
@@ -37,7 +36,7 @@ import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Indexed
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "athletes"})
 public class SportClub {
 
     @Id
@@ -58,7 +57,8 @@ public class SportClub {
     @Field(analyze= Analyze.NO)
     private String vatNumber;
 
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "club")
+    @XmlTransient
     private List<Athlete> athletes = new ArrayList<>();
 
     public String getId() {

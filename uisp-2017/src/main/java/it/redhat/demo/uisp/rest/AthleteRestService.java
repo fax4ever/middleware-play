@@ -6,6 +6,7 @@ import javax.ws.rs.BeanParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,6 +17,7 @@ import it.redhat.demo.uisp.rest.factory.EntityFactory;
 import it.redhat.demo.uisp.service.AthleteBeanParams;
 import it.redhat.demo.uisp.service.AthleteContTrxService;
 import it.redhat.demo.uisp.service.AthleteBeanTrxService;
+import it.redhat.demo.uisp.service.exception.UispNotFoundException;
 import org.slf4j.Logger;
 
 /**
@@ -68,6 +70,14 @@ public class AthleteRestService {
     public void deleteByUispCode(@PathParam("uispCode") String uispCode) {
 
         contTrxService.deleteByUispCode(uispCode);
+
+    }
+
+    @Path("uispCode/{uispCode}/club/{clubCode}")
+    @PUT
+    public void associateClub(@PathParam("uispCode") String uispCode, @PathParam("clubCode") String clubCode) throws UispNotFoundException {
+
+        contTrxService.associate(uispCode, clubCode);
 
     }
 

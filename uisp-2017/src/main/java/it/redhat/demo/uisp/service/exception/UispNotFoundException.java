@@ -19,9 +19,9 @@
  */
 package it.redhat.demo.uisp.service.exception;
 
-public class AthleteNotFoundException extends Exception {
+public class UispNotFoundException extends Exception {
 
-    public AthleteNotFoundException(String message) {
+    public UispNotFoundException(String message) {
         super(message);
     }
 }
