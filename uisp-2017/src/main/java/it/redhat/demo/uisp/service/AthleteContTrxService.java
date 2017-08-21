@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 
 import it.redhat.demo.uisp.entity.Athlete;
 import it.redhat.demo.uisp.entity.SportClub;
+import it.redhat.demo.uisp.rest.factory.EntityFactory;
 import it.redhat.demo.uisp.service.exception.UispNotFoundException;
 
 @Stateless
@@ -85,6 +86,24 @@ public class AthleteContTrxService {
         }
     }
 
+    public void createOneAthleteOneClub() {
+
+        // remove all entities
+        List<Athlete> athleteList = getBulk();
+        athleteList.stream().forEach(athlete -> em.remove(athlete));
+
+        List<SportClub> sportClubs = em.createQuery("select a from SportClub a", SportClub.class)
+                .getResultList();
+        sportClubs.stream().forEach(sportClub -> em.remove(sportClub));
+
+        Athlete athlete = EntityFactory.buildAthlete(1);
+        SportClub sportClub = EntityFactory.buildClub(1);
+
+        em.persist(sportClub);
+        em.persist(athlete);
+
+    }
+
     public void associate(String athleteUispCode, String clubCode) throws UispNotFoundException {
 
         List<Athlete> athleteList = findByUispCode(athleteUispCode);
@@ -105,6 +124,25 @@ public class AthleteContTrxService {
 
         athlete.setClub(sportClub);
         //em.merge(athlete);
+
+    }
+
+    public void createOneAthleteOneClubAndAssociate() {
+
+        // remove all entities
+        List<Athlete> athleteList = getBulk();
+        athleteList.stream().forEach(athlete -> em.remove(athlete));
+
+        List<SportClub> sportClubs = em.createQuery("select a from SportClub a", SportClub.class)
+                .getResultList();
+        sportClubs.stream().forEach(sportClub -> em.remove(sportClub));
+
+        Athlete athlete = EntityFactory.buildAthlete(1);
+        SportClub sportClub = EntityFactory.buildClub(1);
+        athlete.setClub(sportClub);
+
+        em.persist(sportClub);
+        em.persist(athlete);
 
     }
 

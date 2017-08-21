@@ -15,8 +15,8 @@ import javax.ws.rs.core.MediaType;
 import it.redhat.demo.uisp.entity.Athlete;
 import it.redhat.demo.uisp.rest.factory.EntityFactory;
 import it.redhat.demo.uisp.service.AthleteBeanParams;
-import it.redhat.demo.uisp.service.AthleteContTrxService;
 import it.redhat.demo.uisp.service.AthleteBeanTrxService;
+import it.redhat.demo.uisp.service.AthleteContTrxService;
 import it.redhat.demo.uisp.service.exception.UispNotFoundException;
 import org.slf4j.Logger;
 
@@ -77,9 +77,32 @@ public class AthleteRestService {
     @PUT
     public void associateClub(@PathParam("uispCode") String uispCode, @PathParam("clubCode") String clubCode) throws UispNotFoundException {
 
-        contTrxService.associate(uispCode, clubCode);
+        beanTrxService.associate(uispCode, clubCode);
 
     }
 
+    @Path("one")
+    @POST
+    public void createOneAthleteOneClub() {
+
+        contTrxService.createOneAthleteOneClub();
+
+    }
+
+    @Path("associate")
+    @POST
+    public void associate() throws UispNotFoundException {
+
+        contTrxService.associate("000000001", "000000001");
+
+    }
+
+    @Path("oneAndAssociate")
+    @POST
+    public void createOneAthleteOneClubAndAssociate() {
+
+        contTrxService.createOneAthleteOneClubAndAssociate();
+
+    }
 
 }

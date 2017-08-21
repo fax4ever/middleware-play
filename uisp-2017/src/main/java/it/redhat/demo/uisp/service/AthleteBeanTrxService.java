@@ -26,10 +26,16 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import it.redhat.demo.uisp.entity.Athlete;
+import it.redhat.demo.uisp.entity.SportClub;
+import it.redhat.demo.uisp.service.exception.UispNotFoundException;
 import org.slf4j.Logger;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -124,6 +130,47 @@ public class AthleteBeanTrxService {
                 throw new RuntimeException(e);
             }
 
+        }
+    }
+
+    public void associate(String athleteUispCode, String clubCode) throws UispNotFoundException {
+
+        try {
+
+            ut.begin();
+            em.joinTransaction();
+
+            List<Athlete> athleteList = em.createQuery("select a from Athlete a where uispCode = :uispCode", Athlete.class)
+                    .setParameter("uispCode", athleteUispCode).getResultList();
+            if (athleteList.isEmpty()) {
+                throw new UispNotFoundException("Athlete " + athleteUispCode + " not found");
+            }
+
+            List<SportClub> sportClubs = em.createQuery("select a from SportClub a where code = :code", SportClub.class)
+                    .setParameter("code", clubCode)
+                    .getResultList();
+
+            if (sportClubs.isEmpty()) {
+                throw new UispNotFoundException("Club " + clubCode + " not found");
+            }
+
+            Athlete athlete = athleteList.get(0);
+            SportClub sportClub = sportClubs.get(0);
+
+            athlete.setClub(sportClub);
+
+            ut.commit();
+
+            // clear caches
+            em.clear();
+
+        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
+
+            try {
+                ut.rollback();
+            } catch (SystemException e1) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
