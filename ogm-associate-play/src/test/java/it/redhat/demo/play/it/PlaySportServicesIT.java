@@ -22,8 +22,6 @@ package it.redhat.demo.play.it;
 import java.util.Calendar;
 import java.util.List;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.UserTransaction;
 
 import it.redhat.demo.play.entity.Address;
 import it.redhat.demo.play.entity.Athlete;
@@ -31,8 +29,7 @@ import it.redhat.demo.play.entity.Club;
 import it.redhat.demo.play.entity.ClubEmployee;
 import it.redhat.demo.play.repo.AthleteRepo;
 import it.redhat.demo.play.repo.ClubRepo;
-import it.redhat.demo.play.service.AthleteService;
-import it.redhat.demo.play.service.ClubEmployeeService;
+import it.redhat.demo.play.repository.AthleteRepository;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -69,16 +66,7 @@ public class PlaySportServicesIT {
     private AthleteRepo athleteRepo;
 
     @Inject
-    private AthleteService athleteService;
-
-    @Inject
-    private ClubEmployeeService clubEmployeeService;
-
-    @Inject
-    private UserTransaction utx;
-
-    @Inject
-    private EntityManager em;
+    private AthleteRepository athleteRepository;
 
     @Test
     @InSequence(1)
@@ -204,7 +192,13 @@ public class PlaySportServicesIT {
     @InSequence(3)
     public void associateClubToAthletes() throws Exception {
 
-        //athleteService.joinClub("123456789", "RM731");
+        List<Athlete> athleteList = athleteRepo.findByUispCode("123456789");
+        List<Club> clubList = clubRepo.findByCode("RM731");
+
+        assertEquals(1, athleteList.size());
+        assertEquals(1, clubList.size());
+
+        athleteRepository.addAthleteToClub(athleteList.get(0), clubList.get(0));
 
     }
 
@@ -232,7 +226,10 @@ public class PlaySportServicesIT {
         address.setZip("01911");
         clubEmployee.setAddress(address);
 
-        //clubEmployeeService.create(clubEmployee, "TO733");
+        List<Club> clubList = clubRepo.findByCode("TO733");
+        assertEquals(1, clubList.size());
+
+        athleteRepository.createEmployee(clubEmployee, clubList.get(0));
 
     }
 
@@ -261,7 +258,10 @@ public class PlaySportServicesIT {
         address.setZip("01911");
         athlete.setAddress(address);
 
-        //athleteService.create(athlete, "RM731");
+        List<Club> clubList = clubRepo.findByCode("RM731");
+        assertEquals(1, clubList.size());
+
+        athleteRepository.createAthlete(athlete, clubList.get(0));
 
     }
 

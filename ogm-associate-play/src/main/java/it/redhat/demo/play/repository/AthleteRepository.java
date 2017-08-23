@@ -21,6 +21,7 @@ import javax.persistence.PersistenceContext;
 
 import it.redhat.demo.play.entity.Athlete;
 import it.redhat.demo.play.entity.Club;
+import it.redhat.demo.play.entity.ClubEmployee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +46,18 @@ public class AthleteRepository {
 
         entityManager.persist( athlete );
         return athlete;
+    }
+
+    public ClubEmployee createEmployee(ClubEmployee clubEmployee, Club club) {
+
+        if ( club != null ) {
+            club = entityManager.merge( club );
+            clubEmployee.setCompany(club);
+            club.getEmployees().add( clubEmployee );
+        }
+
+        entityManager.persist( clubEmployee );
+        return clubEmployee;
     }
 
     public Athlete saveAthlete(Athlete athlete) {
