@@ -35,11 +35,12 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+
+import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
 public class UispIT {
@@ -94,14 +95,14 @@ public class UispIT {
         List<Athlete> athletes = athleteContTrxService.getBulk();
         List<SportClub> clubs = clubContTrxService.getBulk();
 
-        Assert.assertEquals(0, athletes.size());
-        Assert.assertEquals(0, clubs.size());
+        assertEquals(0, athletes.size());
+        assertEquals(0, clubs.size());
 
         clubs = ObjectHelper.buildClubs(10);
         clubBeanTrxService.insertClubs(clubs);
 
         clubs = clubContTrxService.getBulk();
-        Assert.assertEquals(10, clubs.size());
+        assertEquals(10, clubs.size());
 
         // insertAthletes
 
@@ -127,7 +128,7 @@ public class UispIT {
 
         //verify100athletesFor10club
         athletes = athleteContTrxService.getBulk();
-        Assert.assertEquals(100, athletes.size());
+        assertEquals(100, athletes.size());
 
         // reload clubs
         clubs = clubContTrxService.getBulk();
@@ -135,7 +136,7 @@ public class UispIT {
         // verify than each club has 10 athletes
         for (SportClub club : clubs) {
 
-            Assert.assertEquals(10, club.getAthletes().size());
+            assertEquals(10, club.getAthletes().size());
 
         }
     }
@@ -146,8 +147,8 @@ public class UispIT {
         List<Athlete> athletes = athleteContTrxService.getBulk();
         List<SportClub> clubs = clubContTrxService.getBulk();
 
-        Assert.assertEquals(0, athletes.size());
-        Assert.assertEquals(0, clubs.size());
+        assertEquals(0, athletes.size());
+        assertEquals(0, clubs.size());
 
         athletes = ObjectHelper.buildAthletes(100);
         clubs = ObjectHelper.buildClubs(10);
@@ -167,7 +168,7 @@ public class UispIT {
 
         //verify100athletesFor10club
         athletes = athleteContTrxService.getBulk();
-        Assert.assertEquals(100, athletes.size());
+        assertEquals(100, athletes.size());
 
         // reload clubs
         clubs = clubContTrxService.getBulk();
@@ -175,9 +176,41 @@ public class UispIT {
         // verify than each club has 10 athletes
         for (SportClub club : clubs) {
 
-            Assert.assertEquals(10, club.getAthletes().size());
+            assertEquals(10, club.getAthletes().size());
 
         }
+    }
+
+    public void Club_athl_associate() throws Exception {
+
+        List<Athlete> athletes = athleteContTrxService.getBulk();
+        List<SportClub> clubs = clubContTrxService.getBulk();
+
+        assertEquals(0, athletes.size());
+        assertEquals(0, clubs.size());
+
+        athletes = ObjectHelper.buildAthletes(1);
+        clubs = ObjectHelper.buildClubs(1);
+
+        athleteContTrxService.saveAll(athletes);
+        clubContTrxService.saveAll(clubs);
+
+        athleteContTrxService.associate(athletes.get(0).getUispCode(), clubs.get(0).getCode());
+
+        athletes = athleteContTrxService.getBulk();
+        clubs = clubContTrxService.getBulk();
+
+        assertEquals(1, athletes.size());
+        assertEquals(1, clubs.size());
+
+        SportClub club = athletes.get(0).getClub();
+        assertNotNull(club);
+
+        Athlete athlete = club.getAthletes().get(0);
+        assertNotNull(athlete);
+
+        assertEquals(club, clubs.get(0));
+        assertEquals(athlete, athletes.get(0));
     }
 
 }
