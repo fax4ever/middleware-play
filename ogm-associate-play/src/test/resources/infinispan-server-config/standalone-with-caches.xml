@@ -103,8 +103,6 @@
                     <transaction mode="NON_XA" locking="PESSIMISTIC"/>
                 </distributed-cache>
                 <!-- Currently the needed caches need to be enabled server-side (can't be created from the client) -->
-                <local-cache name="Hike" />
-                <local-cache name="Trip" />
                 <local-cache name="Club" />
                 <local-cache name="Athlete" />
                 <local-cache name="ClubEmployee" />

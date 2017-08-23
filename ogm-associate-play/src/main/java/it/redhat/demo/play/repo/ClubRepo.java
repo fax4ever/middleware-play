@@ -26,12 +26,16 @@ import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
+import org.slf4j.Logger;
 
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
 @Stateless
 public class ClubRepo {
+
+    @Inject
+    private Logger log;
 
     @Inject
     private EntityManager em;
@@ -54,6 +58,13 @@ public class ClubRepo {
 
     public Club findById(String id) {
         return em.find(Club.class, id);
+    }
+
+    public Club getClubByIdWithAthletes(String clubId) {
+        Club club = em.find(Club.class, clubId);
+
+        log.info("Club \"{}\" has {} athletes!", club.getCode(), club.getAthletes().size());
+        return club;
     }
 
     private List<Club> findByField(String fieldName, String fieldValue) {

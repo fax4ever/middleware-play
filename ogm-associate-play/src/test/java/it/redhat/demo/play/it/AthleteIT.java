@@ -20,7 +20,8 @@ import javax.inject.Inject;
 
 import it.redhat.demo.play.entity.Athlete;
 import it.redhat.demo.play.entity.Club;
-import it.redhat.demo.play.repository.AthleteRepository;
+import it.redhat.demo.play.repo.AthleteRepo;
+import it.redhat.demo.play.repo.ClubRepo;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -29,7 +30,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
@@ -38,8 +38,6 @@ import static org.junit.Assert.*;
  */
 @RunWith(Arquillian.class)
 public class AthleteIT {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AthleteIT.class);
 
     @Deployment
     public static WebArchive create() {
@@ -54,7 +52,13 @@ public class AthleteIT {
     }
 
     @Inject
-    private AthleteRepository repository;
+    private AthleteRepo athleteRepo;
+
+    @Inject
+    private ClubRepo clubRepo;
+
+    @Inject
+    private Logger log;
 
     @Test
     public void test_createClub_createLinkedAthlete() {
@@ -65,20 +69,20 @@ public class AthleteIT {
         club.setTaxCode("TAX123456789");
         club.setVatNumber("VAT123456789");
 
-        repository.createClub(club);
+        clubRepo.add(club);
 
         Athlete athlete = new Athlete();
         athlete.setUispCode("123456789");
 
-        repository.createAthlete(athlete, club);
+        athleteRepo.createAthlete(athlete, club);
 
         // reload entities
         String clubId = club.getId();
         String athleteId = athlete.getId();
 
         // verify loaded club
-        club = repository.getClubByIdWithAthletes(clubId);
-        LOG.info("Loaded CLUB {}", club);
+        club = clubRepo.getClubByIdWithAthletes(clubId);
+        log.info("Loaded CLUB {}", club);
 
         assertNotNull(club);
         assertEquals(clubId, club.getId());
@@ -92,8 +96,8 @@ public class AthleteIT {
         assertEquals("123456789", linkedAthlete.getUispCode());
 
         // verify loaded athlete
-        athlete = repository.getAthleteById(athleteId);
-        LOG.info("Loaded ATHLETE {}", athlete);
+        athlete = athleteRepo.findById(athleteId);
+        log.info("Loaded ATHLETE {}", athlete);
 
         assertNotNull(athlete);
         assertEquals(athleteId, athlete.getId());
@@ -116,23 +120,22 @@ public class AthleteIT {
         club.setTaxCode("TAX123456789");
         club.setVatNumber("VAT123456789");
 
-        repository.createClub(club);
+        clubRepo.add(club);
 
         Athlete athlete = new Athlete();
         athlete.setUispCode("123456789");
 
-        repository.saveAthlete(athlete);
+        athleteRepo.add(athlete);
 
-        repository.addAthleteToClub(athlete, club);
+        athleteRepo.addAthleteToClub(athlete, club);
 
-        // reload entities
         // reload entities
         String clubId = club.getId();
         String athleteId = athlete.getId();
 
         // verify loaded club
-        club = repository.getClubByIdWithAthletes(clubId);
-        LOG.info("Loaded CLUB {}", club);
+        club = clubRepo.getClubByIdWithAthletes(clubId);
+        log.info("Loaded CLUB {}", club);
 
         assertNotNull(club);
         assertEquals(clubId, club.getId());
@@ -146,8 +149,8 @@ public class AthleteIT {
         assertEquals("123456789", linkedAthlete.getUispCode());
 
         // verify loaded athlete
-        athlete = repository.getAthleteById(athleteId);
-        LOG.info("Loaded ATHLETE {}", athlete);
+        athlete = athleteRepo.findById(athleteId);
+        log.info("Loaded ATHLETE {}", athlete);
 
         assertNotNull(athlete);
         assertEquals(athleteId, athlete.getId());

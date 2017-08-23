@@ -28,8 +28,8 @@ import it.redhat.demo.play.entity.Athlete;
 import it.redhat.demo.play.entity.Club;
 import it.redhat.demo.play.entity.ClubEmployee;
 import it.redhat.demo.play.repo.AthleteRepo;
+import it.redhat.demo.play.repo.ClubEmployeeRepo;
 import it.redhat.demo.play.repo.ClubRepo;
-import it.redhat.demo.play.repository.AthleteRepository;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
@@ -66,7 +66,7 @@ public class PlaySportServicesIT {
     private AthleteRepo athleteRepo;
 
     @Inject
-    private AthleteRepository athleteRepository;
+    private ClubEmployeeRepo employeeRepo;
 
     @Test
     @InSequence(1)
@@ -229,7 +229,7 @@ public class PlaySportServicesIT {
         List<Club> clubList = clubRepo.findByCode("TO733");
         assertEquals(1, clubList.size());
 
-        athleteRepository.createEmployee(clubEmployee, clubList.get(0));
+        employeeRepo.createEmployee(clubEmployee, clubList.get(0));
 
     }
 
