@@ -25,6 +25,7 @@
     <module>uisp</module>
     <module>uisp-2017</module>
     <module>ogm-play-it</module>
+    <module>ogm-associate-play</module>
   </modules>
 
 </project>
