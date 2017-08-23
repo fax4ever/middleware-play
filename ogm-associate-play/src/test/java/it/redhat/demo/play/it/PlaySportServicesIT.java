@@ -198,7 +198,7 @@ public class PlaySportServicesIT {
         assertEquals(1, athleteList.size());
         assertEquals(1, clubList.size());
 
-        athleteRepository.addAthleteToClub(athleteList.get(0), clubList.get(0));
+        athleteRepo.addAthleteToClub(athleteList.get(0), clubList.get(0));
 
     }
 
@@ -261,7 +261,7 @@ public class PlaySportServicesIT {
         List<Club> clubList = clubRepo.findByCode("RM731");
         assertEquals(1, clubList.size());
 
-        athleteRepository.createAthlete(athlete, clubList.get(0));
+        athleteRepo.createAthlete(athlete, clubList.get(0));
 
     }
 

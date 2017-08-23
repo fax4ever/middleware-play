@@ -16,8 +16,8 @@
 package it.redhat.demo.play.repository;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import it.redhat.demo.play.entity.Athlete;
 import it.redhat.demo.play.entity.Club;
@@ -33,30 +33,26 @@ public class AthleteRepository {
 
     private final static Logger LOG = LoggerFactory.getLogger(AthleteRepository.class);
 
-    @PersistenceContext
+    @Inject
     private EntityManager entityManager;
 
     public Athlete createAthlete(Athlete athlete, Club club) {
 
-        if ( club != null ) {
-            club = entityManager.merge( club );
-            athlete.setClub(club);
-            club.getAthletes().add( athlete );
-        }
-
+        club = entityManager.merge( club );
+        athlete.setClub(club);
+        club.getAthletes().add( athlete );
         entityManager.persist( athlete );
+
         return athlete;
     }
 
     public ClubEmployee createEmployee(ClubEmployee clubEmployee, Club club) {
 
-        if ( club != null ) {
-            club = entityManager.merge( club );
-            clubEmployee.setCompany(club);
-            club.getEmployees().add( clubEmployee );
-        }
-
+        club = entityManager.merge( club );
+        clubEmployee.setCompany(club);
+        club.getEmployees().add( clubEmployee );
         entityManager.persist( clubEmployee );
+
         return clubEmployee;
     }
 

@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 import it.redhat.demo.play.entity.Athlete;
+import it.redhat.demo.play.entity.Club;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -58,6 +59,28 @@ public class AthleteRepo {
 
         Query query = queryBuilder.keyword().onField(fieldName).matching(fieldValue).createQuery();
         return fullTextEntityManager.createFullTextQuery(query, Athlete.class).getResultList();
+    }
+
+    public Athlete createAthlete(Athlete athlete, Club club) {
+
+        club = em.merge( club );
+        athlete.setClub(club);
+        club.getAthletes().add( athlete );
+        em.persist( athlete );
+
+        return athlete;
+    }
+
+    public Athlete addAthleteToClub(Athlete athlete, Club club) {
+
+        club = em.merge(club);
+        athlete = em.merge(athlete);
+
+        athlete.setClub(club);
+        club.getAthletes().add( athlete );
+
+        return athlete;
+
     }
 
 }
