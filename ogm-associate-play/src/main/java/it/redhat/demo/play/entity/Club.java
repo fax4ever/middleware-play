@@ -30,12 +30,36 @@ public class Club {
 
     @Id
     @GeneratedValue
-    public long id;
+    private long id;
 
-    public String code;
+    private String code;
 
     @OneToMany(mappedBy = "club")
-    public List<Athlete> athletes = new ArrayList<>();
+    private List<Athlete> athletes = new ArrayList<>();
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public List<Athlete> getAthletes() {
+        return athletes;
+    }
+
+    public void setAthletes(List<Athlete> athletes) {
+        this.athletes = athletes;
+    }
 
     @Override
     public String toString() {

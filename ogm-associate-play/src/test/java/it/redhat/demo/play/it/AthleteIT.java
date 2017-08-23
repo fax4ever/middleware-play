@@ -60,47 +60,47 @@ public class AthleteIT {
     public void test_createClub_createLinkedAthlete() {
 
         Club club = new Club();
-        club.code = "RM739";
+        club.setCode("RM739");
 
         repository.createClub(club);
 
         Athlete athlete = new Athlete();
-        athlete.uispCode = "123456789";
+        athlete.setUispCode("123456789");
 
         repository.createAthlete(athlete, club);
 
         // reload entities
-        long clubId = club.id;
-        long athleteId = athlete.id;
+        long clubId = club.getId();
+        long athleteId = athlete.getId();
 
-        // verify loaded trip
+        // verify loaded club
         club = repository.getClubByIdWithAthletes(clubId);
         LOG.info("Loaded CLUB {}", club);
 
         assertNotNull(club);
-        assertEquals(clubId, club.id);
-        assertEquals("RM739", club.code);
+        assertEquals(clubId, club.getId());
+        assertEquals("RM739", club.getCode());
 
-        List<Athlete> athletes = club.athletes;
+        List<Athlete> athletes = club.getAthletes();
         assertEquals(1, athletes.size());
 
         Athlete linkedAthlete = athletes.iterator().next();
-        assertEquals(athleteId, linkedAthlete.id);
-        assertEquals("123456789", linkedAthlete.uispCode);
+        assertEquals(athleteId, linkedAthlete.getId());
+        assertEquals("123456789", linkedAthlete.getUispCode());
 
-        // verify loaded hike
+        // verify loaded athlete
         athlete = repository.getAthleteById(athleteId);
         LOG.info("Loaded ATHLETE {}", athlete);
 
         assertNotNull(athlete);
-        assertEquals(athleteId, athlete.id);
-        assertEquals("123456789", athlete.uispCode);
+        assertEquals(athleteId, athlete.getId());
+        assertEquals("123456789", athlete.getUispCode());
 
-        Club linkedClub = athlete.club;
+        Club linkedClub = athlete.getClub();
 
         assertNotNull(linkedClub);
-        assertEquals(clubId, linkedClub.id);
-        assertEquals("RM739", linkedClub.code);
+        assertEquals(clubId, linkedClub.getId());
+        assertEquals("RM739", linkedClub.getCode());
 
     }
 
@@ -108,49 +108,50 @@ public class AthleteIT {
     public void test_createClub_createAthlete_associate() {
 
         Club club = new Club();
-        club.code = "RM739";
+        club.setCode("RM739");
 
         repository.createClub(club);
 
         Athlete athlete = new Athlete();
-        athlete.uispCode = "123456789";
+        athlete.setUispCode("123456789");
 
         repository.saveAthlete(athlete);
 
         repository.addAthleteToClub(athlete, club);
 
         // reload entities
-        long clubId = club.id;
-        long athleteId = athlete.id;
+        // reload entities
+        long clubId = club.getId();
+        long athleteId = athlete.getId();
 
-        // verify loaded trip
+        // verify loaded club
         club = repository.getClubByIdWithAthletes(clubId);
         LOG.info("Loaded CLUB {}", club);
 
         assertNotNull(club);
-        assertEquals(clubId, club.id);
-        assertEquals("RM739", club.code);
+        assertEquals(clubId, club.getId());
+        assertEquals("RM739", club.getCode());
 
-        List<Athlete> athletes = club.athletes;
+        List<Athlete> athletes = club.getAthletes();
         assertEquals(1, athletes.size());
 
         Athlete linkedAthlete = athletes.iterator().next();
-        assertEquals(athleteId, linkedAthlete.id);
-        assertEquals("123456789", linkedAthlete.uispCode);
+        assertEquals(athleteId, linkedAthlete.getId());
+        assertEquals("123456789", linkedAthlete.getUispCode());
 
-        // verify loaded hike
+        // verify loaded athlete
         athlete = repository.getAthleteById(athleteId);
         LOG.info("Loaded ATHLETE {}", athlete);
 
         assertNotNull(athlete);
-        assertEquals(athleteId, athlete.id);
-        assertEquals("123456789", athlete.uispCode);
+        assertEquals(athleteId, athlete.getId());
+        assertEquals("123456789", athlete.getUispCode());
 
-        Club linkedClub = athlete.club;
+        Club linkedClub = athlete.getClub();
 
         assertNotNull(linkedClub);
-        assertEquals(clubId, linkedClub.id);
-        assertEquals("RM739", linkedClub.code);
+        assertEquals(clubId, linkedClub.getId());
+        assertEquals("RM739", linkedClub.getCode());
 
     }
 

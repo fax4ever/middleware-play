@@ -28,12 +28,36 @@ public class Athlete {
 
     @Id
     @GeneratedValue
-    public long id;
+    private long id;
 
-    public String uispCode;
+    private String uispCode;
 
     @ManyToOne
-    public Club club;
+    private Club club;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUispCode() {
+        return uispCode;
+    }
+
+    public void setUispCode(String uispCode) {
+        this.uispCode = uispCode;
+    }
+
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
 
     @Override
     public String toString() {

@@ -39,8 +39,8 @@ public class AthleteRepository {
 
         if ( club != null ) {
             club = entityManager.merge( club );
-            athlete.club = club;
-            club.athletes.add( athlete );
+            athlete.setClub(club);
+            club.getAthletes().add( athlete );
         }
 
         entityManager.persist( athlete );
@@ -68,7 +68,7 @@ public class AthleteRepository {
     public Club getClubByIdWithAthletes(long clubId) {
         Club club = entityManager.find(Club.class, clubId);
 
-        LOG.info("Club \"{}\" has {} athletes!", club.code, club.athletes.size());
+        LOG.info("Club \"{}\" has {} athletes!", club.getCode(), club.getAthletes().size());
         return club;
     }
 
@@ -77,8 +77,8 @@ public class AthleteRepository {
         club = entityManager.merge(club);
         athlete = entityManager.merge(athlete);
 
-        athlete.club = club;
-        club.athletes.add( athlete );
+        athlete.setClub(club);
+        club.getAthletes().add( athlete );
 
         return athlete;
 
