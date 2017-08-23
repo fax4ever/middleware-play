@@ -107,6 +107,7 @@
                 <local-cache name="Trip" />
                 <local-cache name="Club" />
                 <local-cache name="Athlete" />
+                <local-cache name="ClubEmployee" />
                 <local-cache name="hibernate_sequences" />
             </cache-container>
         </subsystem>

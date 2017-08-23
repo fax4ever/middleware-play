@@ -61,6 +61,9 @@ public class AthleteIT {
 
         Club club = new Club();
         club.setCode("RM739");
+        club.setName("Roma");
+        club.setTaxCode("TAX123456789");
+        club.setVatNumber("VAT123456789");
 
         repository.createClub(club);
 
@@ -109,6 +112,9 @@ public class AthleteIT {
 
         Club club = new Club();
         club.setCode("RM739");
+        club.setName("Roma");
+        club.setTaxCode("TAX123456789");
+        club.setVatNumber("VAT123456789");
 
         repository.createClub(club);
 

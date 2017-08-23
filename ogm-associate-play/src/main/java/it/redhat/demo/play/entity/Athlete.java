@@ -13,38 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package it.redhat.demo.play.entity;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
- * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
+ * Created by fabio on 18/08/2017.
  */
+package it.redhat.demo.play.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Pattern;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
-public class Athlete {
+@Indexed
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Athlete extends Person {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
-    private String id;
+    public static final String CODE_REGEX = "\\d{9}";
 
+    @Column(unique = true, nullable = false)
+    @Pattern(regexp = "\\d{9}")
+    @Field(analyze= Analyze.NO)
     private String uispCode;
 
     @ManyToOne
     private Club club;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUispCode() {
         return uispCode;
@@ -63,11 +61,27 @@ public class Athlete {
     }
 
     @Override
-    public String toString() {
-        return "Athlete{" +
-                "id=" + id +
-                ", uispCode='" + uispCode + '\'' +
-                ", club=" + club +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        Athlete athlete = (Athlete) o;
+
+        return uispCode != null ? uispCode.equals(athlete.uispCode) : athlete.uispCode == null;
     }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (uispCode != null ? uispCode.hashCode() : 0);
+        return result;
+    }
+
 }
