@@ -70,8 +70,8 @@ public class AthleteIT {
         repository.createAthlete(athlete, club);
 
         // reload entities
-        long clubId = club.getId();
-        long athleteId = athlete.getId();
+        String clubId = club.getId();
+        String athleteId = athlete.getId();
 
         // verify loaded club
         club = repository.getClubByIdWithAthletes(clubId);
@@ -121,8 +121,8 @@ public class AthleteIT {
 
         // reload entities
         // reload entities
-        long clubId = club.getId();
-        long athleteId = athlete.getId();
+        String clubId = club.getId();
+        String athleteId = athlete.getId();
 
         // verify loaded club
         club = repository.getClubByIdWithAthletes(clubId);

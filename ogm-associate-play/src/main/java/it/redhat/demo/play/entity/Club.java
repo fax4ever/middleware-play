@@ -22,6 +22,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
@@ -29,19 +31,20 @@ import javax.persistence.OneToMany;
 public class Club {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name="uuid", strategy="uuid2")
+    private String id;
 
     private String code;
 
     @OneToMany(mappedBy = "club")
     private List<Athlete> athletes = new ArrayList<>();
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -57,15 +57,15 @@ public class AthleteRepository {
         return club;
     }
 
-    public Athlete getAthleteById(long athleteId) {
+    public Athlete getAthleteById(String athleteId) {
         return entityManager.find( Athlete.class, athleteId );
     }
 
-    public Club getClubById(long clubId) {
+    public Club getClubById(String clubId) {
         return entityManager.find( Club.class, clubId );
     }
 
-    public Club getClubByIdWithAthletes(long clubId) {
+    public Club getClubByIdWithAthletes(String clubId) {
         Club club = entityManager.find(Club.class, clubId);
 
         LOG.info("Club \"{}\" has {} athletes!", club.getCode(), club.getAthletes().size());

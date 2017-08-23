@@ -20,6 +20,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
@@ -27,19 +29,20 @@ import javax.persistence.ManyToOne;
 public class Athlete {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name="uuid", strategy="uuid2")
+    private String id;
 
     private String uispCode;
 
     @ManyToOne
     private Club club;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
