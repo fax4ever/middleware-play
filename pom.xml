@@ -27,6 +27,7 @@
     <module>ogm-play-it</module>
     <module>ogm-associate-play</module>
     <module>infinispan-local</module>
+    <module>ogm-infinispan</module>
   </modules>
 
 </project>
