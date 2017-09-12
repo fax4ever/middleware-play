@@ -26,6 +26,7 @@
     <module>uisp-2017</module>
     <module>ogm-play-it</module>
     <module>ogm-associate-play</module>
+    <module>infinispan-local</module>
   </modules>
 
 </project>
