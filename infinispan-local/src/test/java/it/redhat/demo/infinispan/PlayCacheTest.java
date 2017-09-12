@@ -29,6 +29,20 @@ public class PlayCacheTest {
         assertNotNull(c);
     }
 
+    @Test
+    public void test_bau() throws Exception {
+        Cache<Object, Object> c = new DefaultCacheManager("infinispan-local.xml").getCache("BAU");
+
+        assertNotNull(c);
+    }
+
+    @Test
+    public void test_default_named() throws Exception {
+        Cache<Object, Object> c = new DefaultCacheManager("infinispan-local.xml").getCache("DEFAULT");
+
+        assertNotNull(c);
+    }
+
     @Test(expected = CacheConfigurationException.class)
     // org.infinispan.commons.CacheConfigurationException: ISPN000433: A default cache has been requested, but no cache has been set as default for this container
     public void test_error() throws Exception {
