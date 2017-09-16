@@ -15,30 +15,32 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(JUnit4.class)
 public class PlayCacheTest {
 
+    public static final String INFINISPAN_LOCAL_XML = "infinispan-local.xml";
+
     @Test
     public void test_default() throws Exception {
-        Cache<Object, Object> c = new DefaultCacheManager("infinispan-local.xml").getCache();
+        Cache<Object, Object> c = new DefaultCacheManager(INFINISPAN_LOCAL_XML).getCache();
 
         assertNotNull(c);
     }
 
     @Test
     public void test_entities() throws Exception {
-        Cache<Object, Object> c = new DefaultCacheManager("infinispan-local.xml").getCache("ENTITIES");
+        Cache<Object, Object> c = new DefaultCacheManager(INFINISPAN_LOCAL_XML).getCache("ENTITIES");
 
         assertNotNull(c);
     }
 
     @Test
     public void test_bau() throws Exception {
-        Cache<Object, Object> c = new DefaultCacheManager("infinispan-local.xml").getCache("BAU");
+        Cache<Object, Object> c = new DefaultCacheManager(INFINISPAN_LOCAL_XML).getCache("BAU");
 
         assertNotNull(c);
     }
 
     @Test
     public void test_default_named() throws Exception {
-        Cache<Object, Object> c = new DefaultCacheManager("infinispan-local.xml").getCache("DEFAULT");
+        Cache<Object, Object> c = new DefaultCacheManager(INFINISPAN_LOCAL_XML).getCache("DEFAULT");
 
         assertNotNull(c);
     }
