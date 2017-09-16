@@ -70,7 +70,7 @@ public class FineGrainedAtomicMapTest {
     @Test(expected = RollbackException.class)
     public void writeSkewTest_onTheSameKey() throws Exception {
 
-        Cache<String, Map<String, String>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
@@ -102,7 +102,7 @@ public class FineGrainedAtomicMapTest {
     @Test(expected = RollbackException.class)
     public void writeSkewTest_onDifferentSubKey() throws Exception {
 
-        Cache<String, Map<String, String>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
@@ -133,7 +133,7 @@ public class FineGrainedAtomicMapTest {
     @Test
     public void noWriteSkewTest_onDifferentKey() throws Exception {
 
-        Cache<String, Map<String, String>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
