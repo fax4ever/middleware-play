@@ -42,10 +42,9 @@ public class CacheManagerProducer {
     }
 
     private Configuration getConfig(IsolationLevel isolationLevel, LockingMode lockingMode, boolean writeSkewCheck) {
-        Configuration defaultConfig = getDefaultConfig();
 
         return new ConfigurationBuilder()
-            .read(defaultConfig)
+            .read(getDefaultConfig())
             .transaction()
                 .lockingMode(lockingMode)
             .locking()
