@@ -7,11 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 
 import org.infinispan.Cache;
@@ -23,6 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static it.redhat.demo.infinispan.DistCacheTest.INFINISPAN_DIST_XML;
+import static it.redhat.demo.infinispan.TestHelper.updateEntryInConcurrentThread;
 import static org.junit.Assert.*;
 
 /**
@@ -123,7 +120,7 @@ public class FineGrainedAtomicMapTest {
 
         fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
 
-        Future<?> k3 = updateEntryInConcurrentThread(cache, key, "k3", 7);
+        Future<?> k3 = TestHelper.updateEntryInConcurrentThread(cache, key, "k3", 7);
         k3.get();
 
         fineGrainedAtomicMap.put("k1", 2);
@@ -162,37 +159,6 @@ public class FineGrainedAtomicMapTest {
         fineGrainedAtomicMap.put("k3", 2);
 
         tm.commit();
-
-    }
-
-    private Future<?> updateEntryInConcurrentThread(Cache cache, String key, String subKey, int value) {
-
-        return executor.submit(() -> {
-
-            TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
-            try {
-                tm.begin();
-            } catch (NotSupportedException e) {
-                e.printStackTrace();
-            } catch (SystemException e) {
-                e.printStackTrace();
-            }
-
-            FineGrainedAtomicMap<String, Integer> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
-            fineGrainedAtomicMap.put(subKey, value);
-
-            try {
-                tm.commit();
-            } catch (RollbackException e) {
-                e.printStackTrace();
-            } catch (HeuristicMixedException e) {
-                e.printStackTrace();
-            } catch (HeuristicRollbackException e) {
-                e.printStackTrace();
-            } catch (SystemException e) {
-                e.printStackTrace();
-            }
-        });
 
     }
 
