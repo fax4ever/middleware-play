@@ -1,4 +1,4 @@
-package it.redhat.demo.infinispan;
+package it.redhat.demo.infinispan.standalone;
 
 import java.util.List;
 import java.util.Map;
@@ -18,8 +18,6 @@ import org.infinispan.stream.CacheCollectors;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static it.redhat.demo.infinispan.DistCacheTest.INFINISPAN_DIST_XML;
-import static it.redhat.demo.infinispan.TestHelper.updateEntryInConcurrentThread;
 import static org.junit.Assert.*;
 
 /**
@@ -36,7 +34,7 @@ public class FineGrainedAtomicMapTest {
 
     @Test
     public void test() throws Exception {
-        Cache<String, Map<String, String>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("ENTITIES");
+        Cache<String, Map<String, String>> cache = new DefaultCacheManager(DistCacheTest.INFINISPAN_DIST_XML).getCache("ENTITIES");
 
         final String key = "mainKey";
 
@@ -70,7 +68,7 @@ public class FineGrainedAtomicMapTest {
     @Test(expected = RollbackException.class)
     public void writeSkewTest_onTheSameKey() throws Exception {
 
-        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(DistCacheTest.INFINISPAN_DIST_XML).getCache("writeSkewTest");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
@@ -88,7 +86,7 @@ public class FineGrainedAtomicMapTest {
 
         fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
 
-        Future<?> k3 = updateEntryInConcurrentThread(cache, key, "k3", 7);
+        Future<?> k3 = SimulateConcurrencyHelper.updateEntryInConcurrentThread(cache, key, "k3", 7);
         k3.get();
 
         fineGrainedAtomicMap.put("k1", 2);
@@ -102,7 +100,7 @@ public class FineGrainedAtomicMapTest {
     @Test(expected = RollbackException.class)
     public void writeSkewTest_onDifferentSubKey() throws Exception {
 
-        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(DistCacheTest.INFINISPAN_DIST_XML).getCache("writeSkewTest");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
@@ -120,7 +118,7 @@ public class FineGrainedAtomicMapTest {
 
         fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
 
-        Future<?> k3 = TestHelper.updateEntryInConcurrentThread(cache, key, "k3", 7);
+        Future<?> k3 = SimulateConcurrencyHelper.updateEntryInConcurrentThread(cache, key, "k3", 7);
         k3.get();
 
         fineGrainedAtomicMap.put("k1", 2);
@@ -133,7 +131,7 @@ public class FineGrainedAtomicMapTest {
     @Test
     public void noWriteSkewTest_onDifferentKey() throws Exception {
 
-        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTest");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(DistCacheTest.INFINISPAN_DIST_XML).getCache("writeSkewTest");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
@@ -151,7 +149,7 @@ public class FineGrainedAtomicMapTest {
 
         fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
 
-        Future<?> k3 = updateEntryInConcurrentThread(cache, key+"_", "k3", 7);
+        Future<?> k3 = SimulateConcurrencyHelper.updateEntryInConcurrentThread(cache, key+"_", "k3", 7);
         k3.get();
 
         fineGrainedAtomicMap.put("k1", 2);

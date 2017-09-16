@@ -1,4 +1,4 @@
-package it.redhat.demo.infinispan;
+package it.redhat.demo.infinispan.standalone;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +18,7 @@ import org.infinispan.atomic.FineGrainedAtomicMap;
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
-public class TestHelper {
+public class SimulateConcurrencyHelper {
 
     public static Future<?> updateEntryInConcurrentThread(Cache cache, String key, String subKey, int value) {
 

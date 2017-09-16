@@ -1,4 +1,4 @@
-package it.redhat.demo.infinispan;
+package it.redhat.demo.infinispan.standalone;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +9,6 @@ import org.infinispan.Cache;
 import org.infinispan.manager.DefaultCacheManager;
 import org.junit.Test;
 
-import static it.redhat.demo.infinispan.DistCacheTest.INFINISPAN_DIST_XML;
-
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
@@ -19,7 +17,7 @@ public class WriteSkewTest {
     @Test
     public void no_writeSkewTest_onTheSameKey() throws Exception {
 
-        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(INFINISPAN_DIST_XML).getCache("writeSkewTestCache");
+        Cache<String, Map<String, Integer>> cache = new DefaultCacheManager(DistCacheTest.INFINISPAN_DIST_XML).getCache("writeSkewTestCache");
 
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
@@ -39,7 +37,7 @@ public class WriteSkewTest {
 
         entry = cache.get(key);
 
-        Future<?> k3 = TestHelper.updateMapInConcurrentThread(cache, key, "k3", 7);
+        Future<?> k3 = SimulateConcurrencyHelper.updateMapInConcurrentThread(cache, key, "k3", 7);
         k3.get();
 
         entry.put("k1", 2);

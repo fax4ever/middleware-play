@@ -1,4 +1,4 @@
-package it.redhat.demo.infinispan;
+package it.redhat.demo.infinispan.standalone;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -51,7 +51,6 @@ public class DistCacheTest {
                 String value = results.get("converted-key");
                 assertNotNull(value);
                 assertEquals("nvert", value);
-
 
             }
         } finally {
