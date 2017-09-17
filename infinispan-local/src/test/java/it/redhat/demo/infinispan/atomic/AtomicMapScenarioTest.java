@@ -106,6 +106,9 @@ public class AtomicMapScenarioTest {
         AtomicMapScenario atomicMapScenario = new AtomicMapScenario(cacheManager.getCache(CacheManagerProducer.RR_OPTI_NOWSC));
         atomicMapScenario.perform();
 
+        // not executed
+        fail();
+
         Map<String, Map<String, Integer>> result = atomicMapScenario.getResult();
         assertNotNull(result);
         assertEquals(getExpectedMap(), result);
@@ -118,6 +121,9 @@ public class AtomicMapScenarioTest {
 
         AtomicMapScenario atomicMapScenario = new AtomicMapScenario(cacheManager.getCache(CacheManagerProducer.RR_OPTI_WSC));
         atomicMapScenario.perform();
+
+        // not executed
+        fail();
 
         Map<String, Map<String, Integer>> result = atomicMapScenario.getResult();
         assertNotNull(result);
