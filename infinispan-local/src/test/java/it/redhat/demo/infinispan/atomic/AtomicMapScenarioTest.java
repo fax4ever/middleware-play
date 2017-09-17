@@ -99,6 +99,7 @@ public class AtomicMapScenarioTest {
 
     }
 
+    // no writeSkew Exception on Infinispan 9.0
     @Test(expected = RollbackException.class)
     public void test_RR_OPTI_NOWSC() throws RollbackException {
 
@@ -111,6 +112,7 @@ public class AtomicMapScenarioTest {
 
     }
 
+    // no writeSkew Exception on Infinispan 9.0
     @Test(expected = RollbackException.class)
     public void test_RR_OPTI_WSC() throws RollbackException {
 

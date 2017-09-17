@@ -51,6 +51,9 @@ public class FineGrainedAtomicMapTest {
             .collect(CacheCollectors.serializableCollector(() -> Collectors.toList()));
 
         assertNotNull(collect);
+
+        // 4 item in Infinispan 9.1
+        // 1 item in Infinispan 9.0
         assertEquals(4, collect.size());
 
         tm.begin();
@@ -65,6 +68,7 @@ public class FineGrainedAtomicMapTest {
 
     }
 
+    // no writeSkew Exception on Infinispan 9.0
     @Test(expected = RollbackException.class)
     public void writeSkewTest_onTheSameKey() throws Exception {
 
@@ -97,6 +101,7 @@ public class FineGrainedAtomicMapTest {
 
     }
 
+    // no writeSkew Exception on Infinispan 9.0
     @Test(expected = RollbackException.class)
     public void writeSkewTest_onDifferentSubKey() throws Exception {
 
