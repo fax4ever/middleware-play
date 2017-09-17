@@ -28,14 +28,16 @@ public class CacheMapScenario extends BaseScenario {
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
 
-        Map<String, Integer> entry = new HashMap<>();
-        entry.put("k1", 1);
-        entry.put("k2", 1);
-        entry.put("k3", 1);
+        try {
+            Map<String, Integer> entry = new HashMap<>();
+            entry.put("k1", 1);
+            entry.put("k2", 1);
+            entry.put("k3", 1);
 
-        cache.put(MAIN_KEY, entry);
-
-        tm.commit();
+            cache.put(MAIN_KEY, entry);
+        } finally {
+            tm.commit();
+        }
 
     }
 
@@ -44,16 +46,18 @@ public class CacheMapScenario extends BaseScenario {
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
 
-        Map<String, Integer> entry = cache.get(MAIN_KEY);
+        try {
+            Map<String, Integer> entry = cache.get(MAIN_KEY);
 
-        Future<?> task = executor.submit(new CacheMapConcurrentUpdate(cache, MAIN_KEY, "k3", 7));
-        task.get();
+            Future<?> task = executor.submit(new CacheMapConcurrentUpdate(cache, MAIN_KEY, "k3", 7));
+            task.get();
 
-        entry.put("k1", 2);
-        entry.put("k2", 2);
-        entry.put("k3", 2);
-
-        tm.commit();
+            entry.put("k1", 2);
+            entry.put("k2", 2);
+            entry.put("k3", 2);
+        } finally {
+            tm.commit();
+        }
 
     }
 

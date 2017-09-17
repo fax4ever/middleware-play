@@ -35,9 +35,13 @@ public class AtomicMapConcurrentUpdate implements Runnable {
         try {
 
             tm.begin();
-            FineGrainedAtomicMap<String, Integer> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
-            fineGrainedAtomicMap.put(subKey, value);
-            tm.commit();
+
+            try {
+                FineGrainedAtomicMap<String, Integer> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, key);
+                fineGrainedAtomicMap.put(subKey, value);
+            } finally {
+                tm.commit();
+            }
 
         } catch (NotSupportedException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SystemException e) {
             throw new RuntimeException(e);

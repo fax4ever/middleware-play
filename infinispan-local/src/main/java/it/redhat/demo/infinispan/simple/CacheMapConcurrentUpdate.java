@@ -34,10 +34,15 @@ public class CacheMapConcurrentUpdate implements Runnable {
         try {
 
             tm.begin();
-            Map<String, Integer> entry = cache.get(key);
-            entry.put(subKey, value);
-            cache.put(key, entry);
-            tm.commit();
+
+            try {
+                Map<String, Integer> entry = cache.get(key);
+                entry.put(subKey, value);
+                cache.put(key, entry);
+            } finally {
+                tm.commit();
+            }
+
 
         } catch (NotSupportedException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SystemException e) {
             throw new RuntimeException(e);

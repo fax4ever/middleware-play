@@ -31,12 +31,15 @@ public class AtomicMapScenario extends BaseScenario {
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
 
-        FineGrainedAtomicMap<String, Integer> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, MAIN_KEY);
-        fineGrainedAtomicMap.put("k1", 1);
-        fineGrainedAtomicMap.put("k2", 1);
-        fineGrainedAtomicMap.put("k3", 1);
+        try {
+            FineGrainedAtomicMap<String, Integer> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, MAIN_KEY);
+            fineGrainedAtomicMap.put("k1", 1);
+            fineGrainedAtomicMap.put("k2", 1);
+            fineGrainedAtomicMap.put("k3", 1);
+        } finally {
+            tm.commit();
+        }
 
-        tm.commit();
     }
 
     @Override
@@ -44,16 +47,19 @@ public class AtomicMapScenario extends BaseScenario {
         TransactionManager tm = cache.getAdvancedCache().getTransactionManager();
         tm.begin();
 
-        FineGrainedAtomicMap<Object, Object> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, MAIN_KEY);
+        try {
+            FineGrainedAtomicMap<Object, Object> fineGrainedAtomicMap = AtomicMapLookup.getFineGrainedAtomicMap(cache, MAIN_KEY);
 
-        Future<?> task = executor.submit(new AtomicMapConcurrentUpdate(cache, MAIN_KEY, "k3", 7));
-        task.get();
+            Future<?> task = executor.submit(new AtomicMapConcurrentUpdate(cache, MAIN_KEY, "k3", 7));
+            task.get();
 
-        fineGrainedAtomicMap.put("k1", 2);
-        fineGrainedAtomicMap.put("k2", 2);
-        fineGrainedAtomicMap.put("k3", 2);
+            fineGrainedAtomicMap.put("k1", 2);
+            fineGrainedAtomicMap.put("k2", 2);
+            fineGrainedAtomicMap.put("k3", 2);
+        } finally {
+            tm.commit();
+        }
 
-        tm.commit();
 
     }
 
